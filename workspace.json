@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "graphql-mesh": "packages/graphql-mesh",
+    "graphql-mesh-e2e": "e2e/graphql-mesh-e2e"
+  }
+}
