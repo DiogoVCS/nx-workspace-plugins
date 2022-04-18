@@ -1,0 +1,16 @@
+query ExampleMeQuery {
+  me {
+    firstName
+    lastName
+    jobTitle
+    company {
+      name
+      type
+      employers {
+        firstName
+        lastName
+        jobTitle
+      }
+    }
+  }
+}

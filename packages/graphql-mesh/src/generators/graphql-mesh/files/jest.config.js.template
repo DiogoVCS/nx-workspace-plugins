@@ -1,0 +1,28 @@
+module.exports = {
+  displayName: '<%= fileName %>',
+  preset: '<%= offsetFromRoot %>jest.preset.js',
+  transform: {
+    // '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/node/plugins/jest',
+    '^.+\\.[tj]sx?$': ['babel-jest', { cwd: __dirname, configFile: './babel-jest.config.json' }],
+  },
+  moduleFileExtensions: ['ts', 'js'],
+  // globals: {
+  //   'ts-jest': {
+  //     tsconfig: '<rootDir>/tsconfig.spec.json',
+  //     stringifyContentPathRegex: '\\.(html|svg)$',
+  //   },
+  // },
+  // testEnvironment: 'node',
+  // transform: {
+  //   '^.+\\.[tj]sx?$': 'ts-jest',
+  // },
+  // transformIgnorePatterns: [`<rootDir>/node_modules/(?!.*\\.js$)`],
+  // moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
+  coverageDirectory: '<%= offsetFromRoot %>coverage/<%= projectRoot %>',
+
+  // coverageDirectory: '../../../../../coverage/libs/front-end/widgets/core/mwp-client',
+  collectCoverage: true,
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'],
+  // testResultsProcessor: 'jest-sonar-reporter',
+  resolver: '@nrwl/jest/plugins/resolver',
+  };

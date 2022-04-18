@@ -4,6 +4,19 @@
   "title": "Build executor",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "meshYmlPath": {
+      "description": "Path to where the .meshrc.yml file is located",
+      "type": "string"
+    },
+    "fileType": {
+      "description": "Type of file: [choices: 'json', 'ts'] [default: 'ts']",
+      "type": "string",
+      "pattern": "ts|json",
+      "default": "ts"
+    }
+  },
+  "required": [
+    "meshYmlPath"
+  ]
 }

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSON Schema Example should generate correct schema 1`] = `
+"scalar Any
+
+\\"\\"\\"Fake Company\\"\\"\\"
+type Company {
+  employers: [User]
+  name: String
+  type: CompanyType
+}
+
+enum CompanyType {
+  One_Person
+  Private_Limited
+  Public_Limited
+}
+
+input CreateUpdateUserInput {
+  firstName: String
+  jobTitle: String
+  lastName: String
+}
+
+\\"\\"\\"Represents date values\\"\\"\\"
+scalar Date
+
+type Foo {
+  id: String
+}
+
+type Mutation {
+  createUser(input: CreateUpdateUserInput): User
+  deleteUser(id: ID!): Any
+  updateUser(id: ID!, input: CreateUpdateUserInput): User
+}
+
+type Query {
+  company(id: ID!): Company
+  me: User
+}
+
+\\"\\"\\"Fake User Object\\"\\"\\"
+type User {
+  birthDate: Date
+  company: Company
+  companyId: String
+  firstName: String
+  foos: [Foo]
+  jobTitle: String
+  lastName: String
+}"
+`;

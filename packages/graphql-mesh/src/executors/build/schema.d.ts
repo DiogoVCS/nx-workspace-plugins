@@ -1,1 +1,6 @@
-export interface BuildExecutorSchema {} // eslint-disable-line
+export type FileTypeSchema = "json" | "ts"
+
+export interface BuildExecutorSchema {
+  meshYmlPath: string;
+  fileType?: FileTypeSchema;
+}
