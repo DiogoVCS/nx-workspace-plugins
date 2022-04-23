@@ -9,6 +9,10 @@ export default async function runExecutor(options: BuildExecutorSchema) {
     buildCommand += ` --fileType ${options.fileType}`
   }
 
+  if (options.envFile) {
+    buildCommand = `env-cmd ${options.envFile} ${buildCommand}`
+  }
+
   const result = await promisify(exec)(buildCommand);
 
   if (!result.stdout.includes("Done!")) {

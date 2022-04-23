@@ -58,16 +58,6 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-function _objectWithoutProperties(obj, keys) {
-  const target = {};
-  for (let i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-  return target;
-}
-
 function addMissingDependencies(tree: Tree) {
   return addDependenciesToPackageJson(tree, {
     "@graphql-mesh/cli": "0.67.3",
@@ -75,17 +65,9 @@ function addMissingDependencies(tree: Tree) {
     "@graphql-mesh/transform-mock": "0.14.27",
     "@graphql-mesh/transform-naming-convention": "^0.10.32",
     "graphql": "16.0.1",
+    "env-cmd": "^10.1.0",
   }, {"@graphql-mesh/cross-helpers": "0.1.0"})
 }
-
-// function updateWorkspaceJson(tree: Tree) {
-//   const workspace = readJson(tree, 'workspace.json');
-//
-//   //clone project and remove one entry
-//   const clone = _objectWithoutProperties(workspace['projects'], [normalizedNames.fileName]);
-//   //update workspace.json with removed entry
-//   tree.write('workspace.json', JSON.stringify({...workspace, projects: clone}));
-// }
 
 function addJestPreset(tree: Tree, options: NormalizedSchema) {
   generateFiles(

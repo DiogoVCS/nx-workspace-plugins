@@ -39,6 +39,16 @@ describe('Build Executor', () => {
     expect(output.success).toBe(true);
   });
 
+  it('should apply the env file', async () => {
+    const envFile = "./some-path/.env";
+
+    mockPromisify("Done!")
+    const output = await executor({...options, envFile});
+
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(`env-cmd ${envFile}`), expect.any(Function))
+    expect(output.success).toBe(true);
+  });
+
   it("should fail executor if mesh command fails", async () => {
     mockPromisify("Not working")
     const output = await executor(options);

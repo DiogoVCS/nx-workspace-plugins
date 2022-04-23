@@ -4,6 +4,19 @@
   "title": "Serve executor",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "meshYmlPath": {
+      "description": "Path to where the .meshrc.yml file is located",
+      "type": "string"
+    },
+    "port": {
+      "description": "Port to serve the application",
+      "type": "number"
+    },
+    "envFile": {
+      "description": "Path to where the .env file is located",
+      "type": "string"
+    }
+  },
+  "required": ["meshYmlPath"]
 }

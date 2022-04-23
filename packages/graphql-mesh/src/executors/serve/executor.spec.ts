@@ -22,7 +22,7 @@ describe('Serve Executor', () => {
   it('can run', async () => {
 
     mockPromisify("Done!")
-    const output = await executor(options);
+    await executor(options);
 
     expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `mesh dev --dir ${options.meshYmlPath}`, expect.any(Function))
   });
@@ -31,8 +31,17 @@ describe('Serve Executor', () => {
     const port = 4000;
 
     mockPromisify("Done!")
-    const output = await executor({...options, port});
+    await executor({...options, port});
 
     expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(` --port ${port}`), expect.any(Function))
+  });
+
+  it('should apply the env file', async () => {
+    const envFile = "./some-path/.env";
+
+    mockPromisify("Done!")
+    await executor({...options, envFile});
+
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(`env-cmd ${envFile}`), expect.any(Function))
   });
 });

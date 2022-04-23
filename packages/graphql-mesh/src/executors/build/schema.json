@@ -14,6 +14,10 @@
       "type": "string",
       "pattern": "ts|json",
       "default": "ts"
+    },
+    "envFile": {
+      "description": "Path to where the .env file is located",
+      "type": "string"
     }
   },
   "required": [

@@ -9,17 +9,9 @@ export default async function runExecutor(options: ServeExecutorSchema) {
     serveCommand += ` --port ${options.port}`
   }
 
-  await promisify(exec)(serveCommand);
+  if (options.envFile) {
+    serveCommand = `env-cmd ${options.envFile} ${serveCommand}`
+  }
 
-  // if (!result.stdout.includes("Done!")) {
-  //   return {
-  //     ...result,
-  //     success: false
-  //   }
-  // }
-  //
-  // return {
-  //   ...result,
-  //   success: true,
-  // };
+  await promisify(exec)(serveCommand);
 }
