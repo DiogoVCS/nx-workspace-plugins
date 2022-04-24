@@ -3,6 +3,7 @@ import executor from './executor';
 import * as child_process from "child_process";
 import Mock = jest.Mock;
 
+jest.mock('fs')
 jest.mock("child_process")
 
 const options: BuildExecutorSchema = {
@@ -25,7 +26,8 @@ describe('Build Executor', () => {
     mockPromisify("Done!")
     const output = await executor(options);
 
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `mesh build --dir ${options.meshYmlPath}`, expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `yamlinc --output ./some/.compiled/.meshrc.yml ./some/path/.meshrc.yml --strict`, expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(2, `mesh build --dir some/.compiled`, expect.any(Function))
     expect(output.success).toBe(true);
   });
 
@@ -35,7 +37,8 @@ describe('Build Executor', () => {
     mockPromisify("Done!")
     const output = await executor({...options, fileType});
 
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(` --fileType ${fileType}`), expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `yamlinc --output ./some/.compiled/.meshrc.yml ./some/path/.meshrc.yml --strict`, expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(2, expect.stringContaining(` --fileType ${fileType}`), expect.any(Function))
     expect(output.success).toBe(true);
   });
 
@@ -45,7 +48,8 @@ describe('Build Executor', () => {
     mockPromisify("Done!")
     const output = await executor({...options, envFile});
 
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(`env-cmd ${envFile}`), expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `yamlinc --output ./some/.compiled/.meshrc.yml ./some/path/.meshrc.yml --strict`, expect.any(Function))
+    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(2, expect.stringContaining(`env-cmd ${envFile}`), expect.any(Function))
     expect(output.success).toBe(true);
   });
 

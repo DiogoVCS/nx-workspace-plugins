@@ -11,4 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/graphql-mesh',
+  coverageReporters: ['html', 'lcov'],
 };

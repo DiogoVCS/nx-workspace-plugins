@@ -1,0 +1,7 @@
+name: 'Build Prepare'
+description: 'Prepares and installs everything needed'
+runs:
+  using: "composite"
+  steps:
+    - run: npm ci
+      shell: bash

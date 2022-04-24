@@ -1,0 +1,7 @@
+name: 'Lint'
+description: 'Runs the linting for the projects'
+runs:
+  using: "composite"
+  steps:
+    - run: npx nx affected --target=lint
+      shell: bash

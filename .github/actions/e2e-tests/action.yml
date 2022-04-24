@@ -1,0 +1,7 @@
+name: 'E2E tests'
+description: 'Runs the e2e tests'
+runs:
+  using: "composite"
+  steps:
+    - run: npx nx e2e graphql-mesh-e2e
+      shell: bash
