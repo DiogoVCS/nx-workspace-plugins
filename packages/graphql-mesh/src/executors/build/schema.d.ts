@@ -4,4 +4,5 @@ export interface BuildExecutorSchema {
   meshYmlPath: string;
   fileType?: FileTypeSchema;
   envFile?: string;
+  singleMeshFile?: boolean;
 }

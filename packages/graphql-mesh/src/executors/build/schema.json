@@ -18,6 +18,11 @@
     "envFile": {
       "description": "Path to where the .env file is located",
       "type": "string"
+    },
+    "singleMeshFile": {
+      "description": "If meshrc is configured as a single file or subdivided into multiple files",
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [

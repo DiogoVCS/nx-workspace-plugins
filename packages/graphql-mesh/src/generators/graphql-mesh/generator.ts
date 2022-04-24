@@ -47,6 +47,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...options,
     ...names(options.name),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
+    singleMeshFile: options.singleMeshFile,
     template: '',
   };
 
@@ -58,15 +59,21 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-function addMissingDependencies(tree: Tree) {
-  return addDependenciesToPackageJson(tree, {
+function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
+  let dependencies: Record<string, string> = {
     "@graphql-mesh/cli": "0.67.3",
     "@graphql-mesh/json-schema": "0.27.6",
     "@graphql-mesh/transform-mock": "0.14.27",
     "@graphql-mesh/transform-naming-convention": "^0.10.32",
     "graphql": "16.0.1",
     "env-cmd": "^10.1.0",
-  }, {"@graphql-mesh/cross-helpers": "0.1.0"})
+  }
+
+  if (!options.singleMeshFile) {
+    dependencies = {...dependencies, "yamlinc": "0.1.10"}
+  }
+
+  return addDependenciesToPackageJson(tree, dependencies, {"@graphql-mesh/cross-helpers": "0.1.0"})
 }
 
 function addJestPreset(tree: Tree, options: NormalizedSchema) {
@@ -83,7 +90,7 @@ export async function applicationGenerator(
   options: GraphqlMeshGeneratorSchema
 ) {
   const normalizedOptions = normalizeOptions(tree, options);
-  const installTask = addMissingDependencies(tree);
+  const installTask = addMissingDependencies(tree, normalizedOptions);
 
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
@@ -93,7 +100,8 @@ export async function applicationGenerator(
       build: {
         executor: '@nx-diogo/graphql-mesh:build',
         options: {
-          meshYmlPath: `${normalizedOptions.projectRoot}/config`
+          meshYmlPath: `${normalizedOptions.projectRoot}/config`,
+          singleMeshFile: options.singleMeshFile
         }
       },
       test: {
