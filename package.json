@@ -1,13 +1,13 @@
 {
-  "name": "nx-diogo",
-  "version": "0.0.0",
+  "name": "diogovcs",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test"
   },
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@graphql-mesh/cli": "0.67.3",
     "@nrwl/cli": "13.10.2",

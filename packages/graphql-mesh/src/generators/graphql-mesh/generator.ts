@@ -42,7 +42,7 @@ function normalizeOptions(
   };
 }
 
-function addFiles(tree: Tree, options: NormalizedSchema) {
+function addFiles(tree: Tree, options: NormalizedSchema, dir: string) {
   const templateOptions = {
     ...options,
     ...names(options.name),
@@ -53,33 +53,34 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   generateFiles(
     tree,
-    path.join(__dirname, './files'),
+    path.join(__dirname, dir),
     options.projectRoot,
     templateOptions
   );
 }
 
 function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
-  let dependencies: Record<string, string> = {
+  const dependencies: Record<string, string> = {
     "@graphql-mesh/cli": "0.67.3",
     "@graphql-mesh/json-schema": "0.27.6",
-    "@graphql-mesh/transform-mock": "0.14.27",
+    "@graphql-mesh/transform-mock": "0.13.6",
     "@graphql-mesh/transform-naming-convention": "^0.10.32",
     "graphql": "16.0.1",
-    "env-cmd": "^10.1.0",
   }
+
+  let devDependencies: Record<string, string> = {"@graphql-mesh/cross-helpers": "0.1.0", "env-cmd": "^10.1.0"}
 
   if (!options.singleMeshFile) {
-    dependencies = {...dependencies, "yamlinc": "0.1.10"}
+    devDependencies = {...devDependencies, "yamlinc": "0.1.10"}
   }
 
-  return addDependenciesToPackageJson(tree, dependencies, {"@graphql-mesh/cross-helpers": "0.1.0"})
+  return addDependenciesToPackageJson(tree, dependencies, devDependencies)
 }
 
 function addJestPreset(tree: Tree, options: NormalizedSchema) {
   generateFiles(
     tree,
-    path.join(__dirname, './files_root'),
+    path.join(__dirname, './files-root'),
     `${offsetFromRoot(options.projectDirectory)}/proj`,
     {}
   );
@@ -98,7 +99,7 @@ export async function applicationGenerator(
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nx-diogo/graphql-mesh:build',
+        executor: '@diogovcs/graphql-mesh:build',
         options: {
           meshYmlPath: `${normalizedOptions.projectRoot}/config`,
           singleMeshFile: options.singleMeshFile
@@ -116,7 +117,7 @@ export async function applicationGenerator(
         }
       },
       serve: {
-        executor: '@nx-diogo/graphql-mesh:serve',
+        executor: '@diogovcs/graphql-mesh:serve',
         options: {
           meshYmlPath: `${normalizedOptions.projectRoot}/config`
         }
@@ -133,7 +134,12 @@ export async function applicationGenerator(
 
   addJestPreset(tree, normalizedOptions)
 
-  addFiles(tree, normalizedOptions);
+  addFiles(tree, normalizedOptions, './files');
+
+  if (!options.singleMeshFile) {
+    addFiles(tree, normalizedOptions, './files-multiple-mesh');
+  }
+
   await formatFiles(tree);
 
   return () => {

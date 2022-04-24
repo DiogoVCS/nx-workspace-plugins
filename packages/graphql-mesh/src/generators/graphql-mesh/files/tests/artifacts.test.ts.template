@@ -12,7 +12,7 @@ describe('Artifacts', () => {
     const { getBuiltMesh } = await import('../.compiled/.mesh/index');
 <%  } %>
     const { execute } = await getBuiltMesh();
-    const query = await readFile(join(__dirname, '../example-query.graphql'), 'utf-8');
+    const query = await readFile(join(__dirname, '../src/example-query.graphql'), 'utf-8');
     const executionResult = await execute(query, {});
     expect(executionResult?.data?.me?.firstName).toBeDefined();
     expect(executionResult?.data?.me?.jobTitle).toBeDefined();

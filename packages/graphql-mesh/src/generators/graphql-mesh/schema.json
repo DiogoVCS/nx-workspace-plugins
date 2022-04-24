@@ -28,7 +28,7 @@
       "type": "boolean",
       "description": "If meshrc is configured as a single file or subdivided into multiple files",
       "alias": "s",
-      "default": true
+      "default": false
     }
   },
   "required": [
