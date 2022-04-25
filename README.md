@@ -50,7 +50,7 @@ nx generate @diogovcs/graphql-mesh:install my-graphql-mesh --singleMeshFile
 Create app on specif folder:
 
 ```shell
-nx generate @diogovcs/graphql-mesh:install my-graphql-mesh --directory=apps/api-gateways
+nx generate @diogovcs/graphql-mesh:install my-graphql-mesh --directory=api-gateways
 ```
 
 ## Build
