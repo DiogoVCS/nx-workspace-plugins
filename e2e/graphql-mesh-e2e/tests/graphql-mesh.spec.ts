@@ -7,7 +7,7 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin}`
+        `generate @diogovcs/graphql-mesh:install ${plugin}`
       );
       const result = await runNxCommandAsync(`build ${plugin}`);
       expect(result.stdout).toContain(`Successfully ran target build for project ${plugin}`);
@@ -18,7 +18,7 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin}`
+        `generate @diogovcs/graphql-mesh:install ${plugin}`
       );
       const result = await runNxCommandAsync(`test ${plugin} -u`);
 
@@ -31,7 +31,7 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin} --singleMeshFile`
+        `generate @diogovcs/graphql-mesh:install ${plugin} --singleMeshFile`
       );
       const result = await runNxCommandAsync(`build ${plugin}`);
       expect(result.stdout).toContain(`Successfully ran target build for project ${plugin}`);
@@ -41,7 +41,7 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin} --singleMeshFile`
+        `generate @diogovcs/graphql-mesh:install ${plugin} --singleMeshFile`
       );
       const result = await runNxCommandAsync(`test ${plugin} -u`);
 
@@ -54,7 +54,7 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin} --directory subdir`
+        `generate @diogovcs/graphql-mesh:install ${plugin} --directory subdir`
       );
       expect(() =>
         checkFilesExist(`apps/subdir/${plugin}/src/index.ts`)
@@ -67,10 +67,10 @@ describe('graphql-mesh e2e', () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
-        `generate @diogovcs/graphql-mesh:graphql-mesh ${plugin} --tags e2etag,e2ePackage`
+        `generate @diogovcs/graphql-mesh:install ${plugin} --tags e2etag,e2ePackage`
       );
       const project = readJson(`apps/${plugin}/project.json`);
       expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
-    }, 120000);
+    }, 200000);
   });
 });

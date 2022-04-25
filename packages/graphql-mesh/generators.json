@@ -3,7 +3,7 @@
   "name": "graphql-mesh",
   "version": "0.0.1",
   "generators": {
-    "graphql-mesh": {
+    "install": {
       "factory": "./src/generators/graphql-mesh/generator",
       "schema": "./src/generators/graphql-mesh/schema.json",
       "description": "graphql-mesh generator"
