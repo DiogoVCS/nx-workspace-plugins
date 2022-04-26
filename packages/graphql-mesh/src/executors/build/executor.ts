@@ -4,8 +4,6 @@ import {exec} from "child_process";
 import {existsSync, mkdirSync, writeFileSync} from "fs"
 
 export default async function runExecutor(options: BuildExecutorSchema) {
-//.replace(".meshrc.yml", ".meshrc.compiled.yml")
-
   let compiledYmlPath = options.meshYmlPath;
 
   if (!options.singleMeshFile) {
@@ -40,8 +38,7 @@ export default async function runExecutor(options: BuildExecutorSchema) {
   const result = await promisify(exec)(buildCommand);
 
   if (!result.stdout.includes("Done!")) {
-
-
+    
     return {
       ...result,
       success: false

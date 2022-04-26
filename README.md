@@ -29,15 +29,15 @@ nx generate @diogovcs/graphql-mesh:install [APP_NAME] [...OPTIONS]
 ```
 
 This command will create a graphql mesh application with the name APP_NAME for the provided options. By default, this
-will create a `.meshrc.yml` file that is separated into multiple yaml files. This uses the `yamlinc` project to merge all
-the different configurations before build the application (this configuration can be overridden in the options). The
+will create a `.meshrc.yml` file that is separated into multiple yaml files. This uses the `yamlinc` project to merge
+all the different configurations before build the application (this configuration can be overridden in the options). The
 available options allowed when generating an application are the following:
 
 | name             | type      | default | description                                                  |
 |------------------|-----------|---------|--------------------------------------------------------------|
 | --dryRun         | `boolean` | `false` | run with dry mode                                            |
 | --singleMeshFile | `boolean` | `false` | Creates a project with a single `.meshrc` configuration file |
-| --dir            | `string`  | `apps`  | Directory where the application will be created at.          |
+| --directory      | `string`  | `apps`  | Directory where the application will be created at.          |
 
 ### Examples
 
@@ -72,5 +72,37 @@ Here it is an example a build executor configuration:
 }
 ```
 
+### Options
+
+| name           | type      | default | description                                                                                                    |
+|----------------|-----------|---------|----------------------------------------------------------------------------------------------------------------|
+| meshYmlPath    | `string`  | `false` | Path to the `.meshrc.yml` file.                                                                                |
+| singleMeshFile | `boolean` | `false` | Creates a project with a single `.meshrc` configuration file                                                   |
+| envFile        | `string`  | -       | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files. |
+| fileType       | `json`    | `ts`    | `ts` Type of file.                                                                                             |
+
 When using the `singleMeshFile` configuration with `false`, the compiled `.meshrc.yml` will be created under
 the `.compiled` folder.
+
+## Serve
+
+Here it is an example a build executor configuration:
+
+```json
+{
+  "serve": {
+    "executor": "@diogovcs/graphql-mesh:serve",
+    "options": {
+      "meshYmlPath": "apps/api-gateway/config"
+    }
+  }
+}
+```
+
+### Options
+
+| name        | type      | default                   | description                                                                                                    |
+|-------------|-----------|---------------------------|----------------------------------------------------------------------------------------------------------------|
+| meshYmlPath | `string`  | `false`                   | Path to the `.meshrc.yml` file.                                                                                |
+| envFile     | `string`  | -                         | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files. |
+| port        | `integer` | Graphql Mesh default port | Port where the application will be served.                                                                     |
