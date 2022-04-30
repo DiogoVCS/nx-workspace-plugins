@@ -1,19 +1,26 @@
 import {BuildExecutorSchema} from './schema';
 import {promisify} from "util";
-import {exec} from "child_process";
+import {exec, execSync} from "child_process";
 import {existsSync, mkdirSync, writeFileSync} from "fs"
+import {logger} from "@nrwl/devkit";
+
+function constructCompiledYmlPath(meshYmlPath: string): string {
+  let compiledYmlPath: string;
+
+  const splitted = meshYmlPath.split("/")
+  if (splitted.length) {
+    splitted.pop();
+    compiledYmlPath = splitted.join("/")
+  }
+
+  return `${compiledYmlPath}/.compiled`;
+}
 
 export default async function runExecutor(options: BuildExecutorSchema) {
   let compiledYmlPath = options.meshYmlPath;
 
   if (!options.singleMeshFile) {
-    const splitted = options.meshYmlPath.split("/")
-    if (splitted.length) {
-      splitted.pop();
-      compiledYmlPath = splitted.join("/")
-    }
-
-    compiledYmlPath = `${compiledYmlPath}/.compiled`
+    compiledYmlPath = constructCompiledYmlPath(options.meshYmlPath)
   }
 
   let buildCommand = `mesh build --dir ${compiledYmlPath}`;
@@ -32,13 +39,23 @@ export default async function runExecutor(options: BuildExecutorSchema) {
 
     writeFileSync(`./${compiledYmlPath}/.meshrc.yml`, "")
 
-    const yamLincResult = await promisify(exec)(`yamlinc --output ./${compiledYmlPath}/.meshrc.yml ./${options.meshYmlPath}/.meshrc.yml --strict`)
+    const yamlincCommand = `yamlinc --output ./${compiledYmlPath}/.meshrc.yml ./${options.meshYmlPath}/.meshrc.yml --strict`
+
+    try {
+      logger.info(` > ${yamlincCommand}`)
+      execSync(yamlincCommand, {stdio: [0, 1, 2]})
+    } catch (e) {
+      logger.error(`Failed to execute command: ${yamlincCommand}`);
+      return {
+        success: false
+      }
+    }
   }
 
   const result = await promisify(exec)(buildCommand);
 
   if (!result.stdout.includes("Done!")) {
-    
+
     return {
       ...result,
       success: false

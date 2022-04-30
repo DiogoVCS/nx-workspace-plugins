@@ -6,11 +6,10 @@ name: Main
 on:
   push:
     branches:
-      - main
+      - '**'
   pull_request:
-#   release:
-#     types: [created]
-
+    branches:
+      - '**'
 jobs:
   main:
     runs-on: ubuntu-latest
