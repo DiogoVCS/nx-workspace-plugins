@@ -23,9 +23,29 @@
       "description": "If meshrc is configured as a single file or subdivided into multiple files",
       "type": "boolean",
       "default": true
+    },
+    "outputPath": {
+      "description": "Path to where the built files will be placed",
+      "type": "string"
+    },
+    "rootPath": {
+      "description": "Root path of the application",
+      "type": "string"
+    },
+    "tsconfigPath": {
+      "description": "Path to where the tsconfig file is located",
+      "type": "string"
+    },
+    "typescriptSupport": {
+      "description": "Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time.",
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [
-    "meshYmlPath"
+    "meshYmlPath",
+    "outputPath",
+    "rootPath",
+    "tsconfigPath"
   ]
 }

@@ -74,12 +74,16 @@ Here it is an example a build executor configuration:
 
 ### Options
 
-| name           | type      | default | description                                                                                                    |
-|----------------|-----------|---------|----------------------------------------------------------------------------------------------------------------|
-| meshYmlPath    | `string`  | `false` | Path to the `.meshrc.yml` file.                                                                                |
-| singleMeshFile | `boolean` | `false` | Creates a project with a single `.meshrc` configuration file                                                   |
-| envFile        | `string`  | -       | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files. |
-| fileType       | `json`    | `ts`    | `ts` Type of file.                                                                                             |
+| name              | type      | default | description                                                                                                                                          |
+|-------------------|-----------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| meshYmlPath       | `string`  | `false` | Path to the `.meshrc.yml` file.                                                                                                                      |
+| singleMeshFile    | `boolean` | `false` | Creates a project with a single `.meshrc` configuration file                                                                                         |
+| envFile           | `string`  | -       | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files.                                       |
+| fileType          | `json`    | `ts`    | `ts` Type of file.                                                                                                                                   |
+| outputPath        | `string`  |         | Path to where the built files will be placed.                                                                                                        |
+| rootPath          | `string`  |         | Root path of the application.                                                                                                                        |
+| tsconfigPath      | `string`  |         | Path to where the tsconfig file is located.                                                                                                          |
+| typescriptSupport | `boolean` | `true   | Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time. |
 
 When using the `singleMeshFile` configuration with `false`, the compiled `.meshrc.yml` will be created under
 the `.compiled` folder.
