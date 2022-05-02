@@ -43,13 +43,22 @@ function normalizeOptions(
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema, dir: string) {
+  let projectName = options.projectName;
+
+  if (options.directory) {
+    projectName = `${options.directory.replace("/", "-")}-${options.projectName}`
+  }
+
+
   const templateOptions = {
     ...options,
     ...names(options.name),
+    projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     singleMeshFile: options.singleMeshFile,
     template: '',
   };
+
 
   generateFiles(
     tree,
@@ -68,7 +77,11 @@ function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
     "graphql": "16.0.1",
   }
 
-  let devDependencies: Record<string, string> = {"@graphql-mesh/cross-helpers": "0.1.0", "env-cmd": "^10.1.0"}
+  let devDependencies: Record<string, string> = {
+    "@graphql-mesh/cross-helpers": "0.1.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-typescript": "^7.13.0",
+  }
 
   if (!options.singleMeshFile) {
     devDependencies = {...devDependencies, "yamlinc": "0.1.10"}
@@ -102,7 +115,11 @@ export async function applicationGenerator(
         executor: '@diogovcs/graphql-mesh:build',
         options: {
           meshYmlPath: `${normalizedOptions.projectRoot}/config`,
-          singleMeshFile: options.singleMeshFile
+          singleMeshFile: options.singleMeshFile,
+          outputPath: `dist/${normalizedOptions.projectRoot}`,
+          rootPath: `${normalizedOptions.projectRoot}`,
+          tsconfigPath: `${normalizedOptions.projectRoot}/tsconfig.lib.json`,
+          typescriptSupport: true
         }
       },
       test: {

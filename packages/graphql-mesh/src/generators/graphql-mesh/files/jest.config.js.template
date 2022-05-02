@@ -1,8 +1,7 @@
 module.exports = {
-  displayName: '<%= fileName %>',
+  displayName: '<%= projectName %>',
   preset: '<%= offsetFromRoot %>jest.preset.js',
   transform: {
-    // '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/node/plugins/jest',
     '^.+\\.[tj]sx?$': ['babel-jest', { cwd: __dirname, configFile: './babel-jest.config.json' }],
   },
   moduleFileExtensions: ['ts', 'js'],
@@ -10,4 +9,4 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'],
   resolver: '@nrwl/jest/plugins/resolver',
-  };
+};
