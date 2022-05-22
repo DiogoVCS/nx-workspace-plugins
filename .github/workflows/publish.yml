@@ -23,18 +23,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Retrieve version
-        run: |
-          echo "::set-output name=TAG_NAME::$(git describe --abbrev=0 --tags)"
-        id: version
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v1
+        with:
+          commit-ish: 'HEAD~'
 
-      - name: Tag last-release
+      - name: Show Tag
+        id: display
+        run: |
+          echo 'Output from Find Tag: ${{steps.tagger.outputs.tag}}'
+
+      - name: Push new Tag
         shell: bash
         run: |
           git tag -f $TAG_NAME
           git push origin $TAG_NAME --force
         env:
-          TAG_NAME: ${{ steps.version.outputs.TAG_NAME }}
+          TAG_NAME: ${{steps.tagger.outputs.tag}}
 
       - name: Publish package on NPM 📦
         run: npm publish ./dist/packages/graphql-mesh --access public
