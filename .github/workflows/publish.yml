@@ -23,11 +23,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Retrieve version
+        run: |
+          echo "::set-output name=TAG_NAME::$(git describe --abbrev=0 --tags)"
+        id: version
+
       - name: Tag last-release
         shell: bash
         run: |
-          git tag -f last-release
-          git push origin last-release --force
+          git tag -f $TAG_NAME
+          git push origin $TAG_NAME --force
+        env:
+          TAG_NAME: ${{ steps.version.outputs.TAG_NAME }}
 
       - name: Publish package on NPM 📦
         run: npm publish ./dist/packages/graphql-mesh --access public
