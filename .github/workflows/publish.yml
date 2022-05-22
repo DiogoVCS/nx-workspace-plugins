@@ -43,7 +43,7 @@ jobs:
       - name: Push new Tag
         shell: bash
         run: |
-          git push --follow-tags --atomic main
+          git push --follow-tags origin main
         env:
           TAG_NAME: ${{steps.tagger.outputs.tag}}
 
