@@ -2,24 +2,14 @@ name: Publish to NPM
 on:
   - workflow_dispatch
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔍 GH_TOKEN
-        if: env.GH_TOKEN == ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          token: ${{ env.GH_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -32,17 +22,20 @@ jobs:
           git config user.name "DiogoVCS"
           git config user.email "diogovalensoares@gmail.com"
 
-      - name: Install dependencies and build 🔧
-        run: npm install && npx nx run graphql-mesh:build
-
       - name: Unshallow
         run: git fetch --prune
+
+      - name: Install dependencies 🔧
+        run: npm install
 
       - name: Version
         shell: bash
         run: npx nx run graphql-mesh:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build 🔧
+        run: npx nx run graphql-mesh:build
 
       - name: Find Tag
         id: tagger
