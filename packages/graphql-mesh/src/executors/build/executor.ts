@@ -2,7 +2,7 @@ import {BuildExecutorSchema} from './schema';
 import {promisify} from "util";
 import {exec, execSync} from "child_process";
 import {copyFileSync, existsSync, mkdirSync, readdirSync, statSync} from "fs"
-import {getPackageManagerCommand, logger} from "@nrwl/devkit";
+import {detectPackageManager, getPackageManagerCommand, logger} from "@nrwl/devkit";
 import {replaceTscAliasPaths,} from 'tsc-alias';
 import * as path from "path";
 import {PackageManagerCommands} from "nx/src/utils/package-manager";
@@ -74,25 +74,41 @@ function createBuildCommand(options: BuildExecutorSchema) {
   return buildCommand;
 }
 
-function constructMeshRcYamlFile(meshYmlPath: string, packageManager: PackageManagerCommands) {
-  const yamlincCommand = `${packageManager.exec} --package=yamlinc -c 'yamlinc --output ./dist/${meshYmlPath}/.meshrc.yml ./${meshYmlPath}/.meshrc.yml --strict'`
+function constructMeshRcYamlFile(meshYmlPath: string, packageManagerCommands: PackageManagerCommands) {
+  const packageManager = detectPackageManager();
+  const baseCommand = `yamlinc --output ./dist/${meshYmlPath}/.meshrc.yml ./${meshYmlPath}/.meshrc.yml --strict`
+  let yamLincCommand = ""
+
+  if (packageManager === "npm") {
+    yamLincCommand = `${packageManagerCommands.exec} --package=yamlinc -c '${baseCommand}'`
+  } else {
+    yamLincCommand = `${packageManager} dlx ${baseCommand}`
+  }
 
   try {
-    logger.info(` > ${yamlincCommand}`)
-    execSync(yamlincCommand, {stdio: [0, 1, 2]})
+    logger.info(` > ${yamLincCommand}`)
+    execSync(yamLincCommand, {stdio: [0, 1, 2]})
   } catch (e) {
-    logger.error(`Failed to execute command: ${yamlincCommand}`);
+    logger.error(`Failed to execute command: ${yamLincCommand}`);
     return {
       success: false
     }
   }
 }
 
-async function transpileTypescriptFiles(options: BuildExecutorSchema, packageManager: PackageManagerCommands) {
+async function transpileTypescriptFiles(options: BuildExecutorSchema, packageManagerCommands: PackageManagerCommands) {
   const tsconfigPath = `${options.tsconfigPath}`;
+  const packageManager = detectPackageManager();
+  const baseCommand = `tsc --project ./${tsconfigPath}`
+  let command = ""
 
   //TODO: change this for the typescript compiler API.
-  execSync(`${packageManager.exec} --package=typescript -c 'tsc --project ./${tsconfigPath}'`, {stdio: [0, 1, 2]})
+  if (packageManager === "npm") {
+    command = `${packageManagerCommands.exec} --package=typescript -c '${baseCommand}'`
+  } else {
+    command = `${packageManager} dlx ${baseCommand}`
+  }
+  execSync(command, {stdio: [0, 1, 2]})
   await replaceTscAliasPaths({configFile: tsconfigPath})
 }
 

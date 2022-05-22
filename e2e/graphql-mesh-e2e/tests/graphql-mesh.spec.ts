@@ -27,7 +27,7 @@ describe('graphql-mesh e2e', () => {
   })
 
   describe("--singleMeshFile=true", () => {
-    it.only('should create graphql-mesh', async () => {
+    it('should create graphql-mesh', async () => {
       const plugin = uniq('graphql-mesh');
       ensureNxProject('@diogovcs/graphql-mesh', 'dist/packages/graphql-mesh');
       await runNxCommandAsync(
@@ -46,7 +46,7 @@ describe('graphql-mesh e2e', () => {
       const result = await runNxCommandAsync(`test ${plugin} -u`);
 
       expect(result.stdout).toContain(`Successfully ran target test for project ${plugin}`);
-    }, 200000);
+    }, 300000);
   });
 
   describe('--directory', () => {
