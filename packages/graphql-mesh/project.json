@@ -48,6 +48,12 @@
         "jestConfig": "packages/graphql-mesh/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "syncVersions": false
+      }
     }
   },
   "tags": []
