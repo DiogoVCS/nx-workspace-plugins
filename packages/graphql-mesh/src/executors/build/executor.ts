@@ -90,6 +90,7 @@ function constructMeshRcYamlFile(meshYmlPath: string, packageManagerCommands: Pa
     execSync(yamLincCommand, {stdio: [0, 1, 2]})
   } catch (e) {
     logger.error(`Failed to execute command: ${yamLincCommand}`);
+
     return {
       success: false
     }
