@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "stryker-mutator",
+  "version": "0.0.1",
+  "generators": {
+    "stryker-mutator": {
+      "factory": "./src/generators/stryker-mutator/generator",
+      "schema": "./src/generators/stryker-mutator/schema.json",
+      "description": "stryker-mutator generator"
+    }
+  }
+}
