@@ -50,19 +50,4 @@ describe('stryker-mutator e2e', () => {
 
     }, 120000);
   });
-  //
-  // describe('--tags', () => {
-  //   it('should add tags to the project', async () => {
-  //     const plugin = uniq('stryker-mutator');
-  //     ensureNxProject(
-  //       '@diogovcs/stryker-mutator',
-  //       'dist/packages/stryker-mutator'
-  //     );
-  //     await runNxCommandAsync(
-  //       `generate @diogovcs/stryker-mutator:stryker-mutator ${plugin} --tags e2etag,e2ePackage`
-  //     );
-  //     const project = readJson(`libs/${plugin}/project.json`);
-  //     expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
-  //   }, 120000);
-  // });
 });
