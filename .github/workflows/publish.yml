@@ -1,7 +1,13 @@
 name: Publish to NPM
 on:
-  - workflow_dispatch
-
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Choose package to publish
+        options:
+          - graphql-mesh
+          - stryker-mutator
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,12 +36,12 @@ jobs:
 
       - name: Version
         shell: bash
-        run: npx nx run graphql-mesh:version
+        run: npx nx run ${{ github.event.inputs.choice }}:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build 🔧
-        run: npx nx run graphql-mesh:build
+        run: npx nx run ${{ github.event.inputs.choice }}:build
 
       - name: Find Tag
         id: tagger
@@ -52,6 +58,6 @@ jobs:
           TAG_NAME: ${{steps.tagger.outputs.tag}}
 
       - name: Publish package on NPM 📦
-        run: npm publish ./dist/packages/graphql-mesh --access public
+        run: npm publish ./dist/packages/${{ github.event.inputs.choice }} --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

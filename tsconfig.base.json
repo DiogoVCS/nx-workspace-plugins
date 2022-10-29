@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@diogovcs/stryker-mutator": ["packages/stryker-mutator/src/index.ts"],
       "diogovcs/graphql-mesh": ["packages/graphql-mesh/src/index.ts"]
     }
   },

@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "graphql-mesh": "packages/graphql-mesh",
-    "graphql-mesh-e2e": "e2e/graphql-mesh-e2e"
+    "graphql-mesh-e2e": "e2e/graphql-mesh-e2e",
+    "stryker-mutator": "packages/stryker-mutator",
+    "stryker-mutator-e2e": "e2e/stryker-mutator-e2e"
   }
 }
