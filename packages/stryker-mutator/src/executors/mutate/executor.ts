@@ -5,7 +5,6 @@ import {Stryker} from '@stryker-mutator/core';
 export default async function runExecutor(options: MutateExecutorSchema) {
   const strykerConfig = await import(options.strykerConfig);
 
-  // Runs Stryker, will not assume to be allowed to exit the process.
   const stryker = new Stryker({...strykerConfig()});
 
   try {
