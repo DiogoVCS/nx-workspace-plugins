@@ -43,6 +43,7 @@ function normalizeOptions(
       projectName,
       projectRoot
     });
+
   });
 
   return normalizedSchemas;
