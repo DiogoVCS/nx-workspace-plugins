@@ -1,7 +1,12 @@
 {
   "name": "@diogovcs/stryker-mutator",
   "version": "0.0.5",
-  "exports": "./src/index.js",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "generators": "./generators.json",
   "executors": "./executors.json",
   "type": "module"
