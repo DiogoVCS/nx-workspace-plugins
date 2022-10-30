@@ -1,14 +1,12 @@
 import {MutateExecutorSchema} from './schema';
-import {logger,} from "@nrwl/devkit";
+import {logger} from "@nrwl/devkit";
 import {Stryker} from '@stryker-mutator/core';
 
 export default async function runExecutor(options: MutateExecutorSchema) {
-  // const mutateCommand = createMutateCommand(options);
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const strykerConfig = require(options.strykerConfig)
+  const strykerConfig = await import(options.strykerConfig);
 
   // Runs Stryker, will not assume to be allowed to exit the process.
-  const stryker = new Stryker({...strykerConfig});
+  const stryker = new Stryker({...strykerConfig()});
 
   try {
     const mutantResults = await stryker.runMutationTest();

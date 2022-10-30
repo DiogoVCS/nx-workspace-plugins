@@ -1,4 +1,5 @@
 import {
+  addDependenciesToPackageJson,
   formatFiles,
   generateFiles,
   getProjects,
@@ -48,8 +49,6 @@ function normalizeOptions(
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
-  logger.error(`GOT HERE 5 ${options.projectRoot}`);
-
 
   const templateOptions = {
     ...options,
@@ -65,15 +64,24 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
+function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
+  const dependencies: Record<string, string> = {}
+
+  let devDependencies: Record<string, string> = {
+    "@stryker-mutator/core": "^6.2.3",
+  }
+
+  return addDependenciesToPackageJson(tree, dependencies, devDependencies)
+}
+
+
 export default async function (
   tree: Tree,
   options: StrykerMutatorGeneratorSchema
 ) {
-  logger.error(`GOT HERE`);
+  const normalizedOptions: NormalizedSchema[] = normalizeOptions(tree, options);
 
-  const normalizedOptions: NormalizedSchema | NormalizedSchema[] = normalizeOptions(tree, options);
-
-  logger.error(normalizedOptions);
+  const installTask = addMissingDependencies(tree, normalizedOptions[0]);
 
   normalizedOptions.forEach(normalizedOption => {
     const project = readProjectConfiguration(tree, normalizedOption.projectName)
@@ -90,9 +98,13 @@ export default async function (
         },
       }
     })
-    logger.error(`GOT HERE 3`);
+
     addFiles(tree, normalizedOption);
   })
 
   await formatFiles(tree);
+
+  return () => {
+    installTask();
+  };
 }

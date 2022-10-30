@@ -2,7 +2,7 @@ module.exports = {
   testRunner: 'jest',
   // testRunnerNodeArgs: ['--experimental-vm-modules'],
   inPlace: true,
-  reporters: ['html', 'clear-text, 'progress'],
+  reporters: ['html', 'clear-text', 'progress'],
   coverageAnalysis: 'off',
   // coverageAnalysis: 'perTest',
   tsconfigFile: './tsconfig.json',
