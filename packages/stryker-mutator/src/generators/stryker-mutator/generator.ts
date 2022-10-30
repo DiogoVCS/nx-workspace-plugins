@@ -26,7 +26,6 @@ function normalizeOptions(
   const projects = getProjects(tree);
   const normalizedSchemas = [];
 
-
   options.name.split(',').forEach(projectName => {
     let projectRoot = projects.get(projectName).root
     if (!projectRoot) {
