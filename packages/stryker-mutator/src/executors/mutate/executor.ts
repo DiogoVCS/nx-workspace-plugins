@@ -13,6 +13,7 @@ export default async function runExecutor(options: MutateExecutorSchema) {
 
   } catch (error) {
     logger.error("Stryker was unable to run the mutation test. " + error);
+
     return {
       success: false
     }
