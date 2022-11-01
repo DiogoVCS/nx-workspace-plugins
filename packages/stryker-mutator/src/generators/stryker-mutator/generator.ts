@@ -24,17 +24,17 @@ function normalizeOptions(
 ): NormalizedSchema[] {
 
   const projects = getProjects(tree);
-  const normalizedSchemas = [];
+  const normalizedSchemas: NormalizedSchema[] = [];
 
   options.name.split(',').forEach(projectName => {
-    let projectRoot = projects.get(projectName).root
+    let projectRoot = projects.get(projectName)?.root
     if (!projectRoot) {
 
-      const sourceRoot = projects.get(projectName).sourceRoot
+      const sourceRoot = projects.get(projectName)?.sourceRoot
       if (!sourceRoot) {
         logger.error(`Could not generate files for project ${projectName}`);
       }
-      projectRoot = `${sourceRoot.replace(new RegExp("/src$", ""), '')}`;
+      projectRoot = `${sourceRoot?.replace(new RegExp("/src$", ""), '')}`;
     }
 
 

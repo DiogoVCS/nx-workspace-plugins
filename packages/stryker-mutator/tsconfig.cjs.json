@@ -1,11 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/mjs",
+    "outDir": "../../dist/out-tsc/cjs",
     "declaration": true,
     "types": ["node"],
-    "module": "esnext",
-    "target": "esnext"
+    "module": "commonjs",
+    "target": "es2015"
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"]

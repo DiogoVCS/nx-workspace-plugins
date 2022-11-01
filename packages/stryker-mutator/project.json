@@ -2,11 +2,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/stryker-mutator/src",
   "targets": {
-    "build": {
+    "build-mjs": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/packages/stryker-mutator",
+        "outputPath": "dist/packages/stryker-mutator/dist/mjs",
         "main": "packages/stryker-mutator/src/index.ts",
         "tsConfig": "packages/stryker-mutator/tsconfig.lib.json",
         "assets": [
@@ -34,16 +36,74 @@
         ]
       }
     },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "build-cjs",
+          "projects": "self"
+        }
+      ],
+      "options": {
+        "command": "./scripts/fixup.sh"
+      }
+    },
+    "build-cjs": {
+      "executor": "@nrwl/js:tsc",
+      "dependsOn": [
+        {
+          "target": "build-mjs",
+          "projects": "self"
+        }
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/stryker-mutator/dist/cjs",
+        "main": "packages/stryker-mutator/src/index.ts",
+        "tsConfig": "packages/stryker-mutator/tsconfig.cjs.json",
+        "assets": [
+          "packages/stryker-mutator/*.md",
+          {
+            "input": "./packages/stryker-mutator/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/stryker-mutator/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/stryker-mutator",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/stryker-mutator",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/stryker-mutator/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/stryker-mutator/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/stryker-mutator"],
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/stryker-mutator"
+      ],
       "options": {
         "jestConfig": "packages/stryker-mutator/jest.config.ts",
         "passWithNoTests": true

@@ -16,7 +16,7 @@ export default async function runExecutor(options: MutateExecutorSchema) {
   logger.warn("Reading stryker configuration getting file content. 2")
   const strykerConfig = tsquery(strykerConfigAst, 'ObjectLiteralExpression')[0] as unknown as ObjectType;
 
-  logger.warn(`Stryker RAN - ${strykerConfig['testRunner']}`)
+  // logger.warn(`Stryker RAN - ${strykerConfig['testRunner']}`)
 
   const stryker = new Stryker({...strykerConfig});
 

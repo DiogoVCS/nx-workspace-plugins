@@ -1,11 +1,12 @@
 {
   "name": "@diogovcs/stryker-mutator",
   "version": "0.0.7",
-  "private": false,
-  "description": "The nx plugin for stryker mutator that contains executors and generators allowing nx workspaces to run mutation tests.",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/mjs/src/index.js",
+  "exports": {
+    "import": "./dist/mjs/src/index.js",
+    "require": "./dist/cjs/src/index.js"
+  },
   "generators": "./generators.json",
-  "executors": "./executors.json",
-  "type": "module"
+  "executors": "./executors.json"
 }
