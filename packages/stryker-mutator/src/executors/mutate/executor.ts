@@ -1,8 +1,5 @@
 import {ExecutorContext, logger} from "@nrwl/devkit";
 import {Stryker} from '@stryker-mutator/core';
-import {readFileSync} from "fs";
-import {tsquery} from "@phenomnomnominal/tsquery";
-import type {ObjectType} from 'typescript';
 import * as path from "path";
 import {MutateExecutorSchema} from "./schema";
 
@@ -15,13 +12,13 @@ export async function strykerExecutor(
 
   logger.warn("Reading stryker configuration.")
 
-  options.strykerConfig = path.resolve(context.root, options.strykerConfig);
+  const strykerConfig = await import(path.resolve(context.root, options.strykerConfig));
 
-  const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
-  logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
-  const strykerConfigAst = tsquery.ast(strykerConfigFileContent);
-  logger.warn("Reading stryker configuration getting file content. 2")
-  const strykerConfig = tsquery(strykerConfigAst, 'ObjectLiteralExpression')[0] as unknown as ObjectType;
+  // const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
+  // logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
+  // const strykerConfigAst = tsquery.ast(strykerConfigFileContent);
+  // logger.warn("Reading stryker configuration getting file content. 2")
+  // const strykerConfig = tsquery(strykerConfigAst, 'ObjectLiteralExpression')[0] as unknown as ObjectType;
 
   // logger.warn(`Stryker RAN - ${strykerConfig['testRunner']}`)
 

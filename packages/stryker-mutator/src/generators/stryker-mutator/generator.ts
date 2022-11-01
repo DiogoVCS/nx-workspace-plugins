@@ -94,7 +94,7 @@ export default async function (
         mutate: {
           executor: '@diogovcs/stryker-mutator:mutate',
           options: {
-            strykerConfig: `${normalizedOption.projectRoot}/src/stryker.config.js`,
+            strykerConfig: `${normalizedOption.projectRoot}/stryker.config.js`,
           },
         },
       }
