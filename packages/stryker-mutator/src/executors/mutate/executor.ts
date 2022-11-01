@@ -1,15 +1,21 @@
-import {MutateExecutorSchema} from './schema';
-import {logger} from "@nrwl/devkit";
+import {ExecutorContext, logger} from "@nrwl/devkit";
 import {Stryker} from '@stryker-mutator/core';
 import {readFileSync} from "fs";
 import {tsquery} from "@phenomnomnominal/tsquery";
 import type {ObjectType} from 'typescript';
+import * as path from "path";
+import {MutateExecutorSchema} from "./schema";
 
 process.env.NODE_ENV ??= 'test';
 
-export default async function runExecutor(options: MutateExecutorSchema) {
+export async function strykerExecutor(
+  options: MutateExecutorSchema,
+  context: ExecutorContext
+): Promise<{ success: boolean }> {
 
   logger.warn("Reading stryker configuration.")
+
+  options.strykerConfig = path.resolve(context.root, options.strykerConfig);
 
   const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
   logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
@@ -37,3 +43,5 @@ export default async function runExecutor(options: MutateExecutorSchema) {
     success: true,
   };
 }
+
+export default strykerExecutor;
