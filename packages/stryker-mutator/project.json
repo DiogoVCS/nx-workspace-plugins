@@ -2,67 +2,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/stryker-mutator/src",
   "targets": {
-    "build-mjs": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "outputPath": "dist/packages/stryker-mutator/dist/mjs",
-        "main": "packages/stryker-mutator/src/index.ts",
-        "tsConfig": "packages/stryker-mutator/tsconfig.lib.json",
-        "assets": [
-          "packages/stryker-mutator/*.md",
-          {
-            "input": "./packages/stryker-mutator/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/stryker-mutator/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/stryker-mutator",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/stryker-mutator",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "target": "build-cjs",
-          "projects": "self"
-        }
-      ],
-      "options": {
-        "command": "./scripts/fixup.sh"
-      }
-    },
     "build-cjs": {
       "executor": "@nrwl/js:tsc",
-      "dependsOn": [
-        {
-          "target": "build-mjs",
-          "projects": "self"
-        }
-      ],
       "outputs": [
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/packages/stryker-mutator/dist/cjs",
+        "outputPath": "dist/packages/stryker-mutator",
         "main": "packages/stryker-mutator/src/index.ts",
-        "tsConfig": "packages/stryker-mutator/tsconfig.cjs.json",
+        "tsConfig": "packages/stryker-mutator/tsconfig.lib.json",
         "assets": [
           "packages/stryker-mutator/*.md",
           {

@@ -1,12 +1,7 @@
 {
   "name": "@diogovcs/stryker-mutator",
   "version": "0.0.8",
-  "main": "dist/cjs/src/index.js",
-  "module": "dist/mjs/src/index.js",
-  "exports": {
-    "import": "./dist/mjs/src/index.js",
-    "require": "./dist/cjs/src/index.js"
-  },
+  "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json"
 }
