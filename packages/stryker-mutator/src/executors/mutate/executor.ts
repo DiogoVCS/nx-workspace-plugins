@@ -10,6 +10,7 @@ process.env.NODE_ENV ??= 'test';
 export default async function runExecutor(options: MutateExecutorSchema) {
 
   logger.warn("Reading stryker configuration.")
+
   const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
   logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
   const strykerConfigAst = tsquery.ast(strykerConfigFileContent);

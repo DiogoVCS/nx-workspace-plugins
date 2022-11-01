@@ -46,7 +46,7 @@
     "@graphql-mesh/transform-mock": "0.14.27",
     "@graphql-mesh/transform-naming-convention": "^0.10.32",
     "@phenomnomnominal/tsquery": "^5.0.0",
-    "@stryker-mutator/core": "^6.2.3",
+    "@stryker-mutator/core": "^5.6.1",
     "@swc/helpers": "~0.4.11",
     "graphql": "16.0.1",
     "tslib": "^2.3.0"
