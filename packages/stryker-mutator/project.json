@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/stryker-mutator/src",
   "targets": {
-    "build-cjs": {
+    "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": [
         "{options.outputPath}"
