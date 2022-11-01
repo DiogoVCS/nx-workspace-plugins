@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.0.8](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.7...stryker-mutator-0.0.8) (2022-11-01)
+
+
+### Bug Fixes
+
+* Added mjs and cjs bundle support ([a811f1d](https://github.com/DiogoVCS/nx-graphql-mesh/commit/a811f1dfc669baf5325a15618710392b157c6ef2))
+
+
+
 ## [0.0.7](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.6...stryker-mutator-0.0.7) (2022-11-01)
 
 
