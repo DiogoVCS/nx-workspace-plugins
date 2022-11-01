@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.0.9](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.8...stryker-mutator-0.0.9) (2022-11-01)
+
+
+### Bug Fixes
+
+* Fixed project stryker configuration ([13cd6bf](https://github.com/DiogoVCS/nx-graphql-mesh/commit/13cd6bfc4903a549629904b70987ac7db1245959))
+* Fixed project stryker configuration ([2ba4a25](https://github.com/DiogoVCS/nx-graphql-mesh/commit/2ba4a255892e8a9728b3e44486f11cfc9d5e2e10))
+
+
+
 ## [0.0.8](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.7...stryker-mutator-0.0.8) (2022-11-01)
 
 
