@@ -1,5 +1,5 @@
 {
-  "root": "packages/graphql-mesh",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/graphql-mesh/src",
   "targets": {
     "build": {
@@ -43,9 +43,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/graphql-mesh"],
+      "outputs": ["{workspaceRoot}/coverage/packages/graphql-mesh"],
       "options": {
-        "jestConfig": "packages/graphql-mesh/jest.config.js",
+        "jestConfig": "packages/graphql-mesh/jest.config.ts",
         "passWithNoTests": true
       }
     },

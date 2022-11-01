@@ -5,6 +5,8 @@ import {readFileSync} from "fs";
 import {tsquery} from "@phenomnomnominal/tsquery";
 import type {ObjectType} from 'typescript';
 
+process.env.NODE_ENV ??= 'test';
+
 export default async function runExecutor(options: MutateExecutorSchema) {
 
   logger.warn("Reading stryker configuration.")

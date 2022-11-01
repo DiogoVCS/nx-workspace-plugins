@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'graphql-mesh',
   preset: '../../jest.preset.js',
   globals: {

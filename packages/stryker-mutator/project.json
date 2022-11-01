@@ -1,5 +1,5 @@
 {
-  "root": "packages/stryker-mutator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/stryker-mutator/src",
   "targets": {
     "build": {
@@ -43,9 +43,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/stryker-mutator"],
+      "outputs": ["{workspaceRoot}/coverage/packages/stryker-mutator"],
       "options": {
-        "jestConfig": "packages/stryker-mutator/jest.config.js",
+        "jestConfig": "packages/stryker-mutator/jest.config.ts",
         "passWithNoTests": true
       }
     },

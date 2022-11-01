@@ -1,4 +1,6 @@
 {
+  "version": 2,
+  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "title": "Build executor",
@@ -42,10 +44,5 @@
       "default": true
     }
   },
-  "required": [
-    "meshYmlPath",
-    "outputPath",
-    "rootPath",
-    "tsconfigPath"
-  ]
+  "required": ["meshYmlPath", "outputPath", "rootPath", "tsconfigPath"]
 }
