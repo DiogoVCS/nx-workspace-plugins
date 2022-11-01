@@ -69,7 +69,7 @@ function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
   const dependencies: Record<string, string> = {}
 
   let devDependencies: Record<string, string> = {
-    "@stryker-mutator/core": "^6.2.3",
+    "@stryker-mutator/core": "^5.6.1",
   }
 
   return addDependenciesToPackageJson(tree, dependencies, devDependencies)

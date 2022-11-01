@@ -14,6 +14,8 @@ export async function strykerExecutor(
 
   const strykerConfig = await import(path.resolve(context.root, options.strykerConfig));
 
+  logger.warn(`Reading stryker configuration. ${strykerConfig}`)
+
   // const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
   // logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
   // const strykerConfigAst = tsquery.ast(strykerConfigFileContent);
