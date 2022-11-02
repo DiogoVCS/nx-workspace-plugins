@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.1.0](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.15...stryker-mutator-0.1.0) (2022-11-02)
+
+
+### Features
+
+* Added support for nestjs projects ([aeb732a](https://github.com/DiogoVCS/nx-graphql-mesh/commit/aeb732aed733e1c3e2e7b73a995fe37789f7dca2))
+* Removed missleading message when stryker breaks the tests ([819443f](https://github.com/DiogoVCS/nx-graphql-mesh/commit/819443f21fb3c6d4f516a441eaa6c51c4e4b4fd7))
+
+
+
 ## [0.0.15](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.14...stryker-mutator-0.0.15) (2022-11-02)
 
 
