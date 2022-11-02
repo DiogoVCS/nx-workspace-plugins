@@ -1,4 +1,4 @@
-import {ExecutorContext, logger} from "@nrwl/devkit";
+import {ExecutorContext} from "@nrwl/devkit";
 import * as path from "path";
 import {MutateExecutorSchema} from "./schema";
 import {execSync} from "child_process";
@@ -29,8 +29,6 @@ export async function strykerExecutor(
     execSync(strykerCommand, {stdio: [0, 1, 2]})
 
   } catch (error) {
-    logger.error("Stryker was unable to run the mutation test. " + error);
-
     return {
       success: false
     }
