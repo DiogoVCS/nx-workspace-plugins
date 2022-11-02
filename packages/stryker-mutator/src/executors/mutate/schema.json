@@ -6,6 +6,16 @@
   "title": "Mutate executor",
   "description": "",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "mutate": {
+      "alias": "m",
+      "description": "File to mutate (example: src/app.js OR src/app.js:5-7).",
+      "type": "string"
+    },
+    "incremental": {
+      "description": "StrykerJS will track the changes you make to your code and tests and only runs mutation testing on the changed code.",
+      "type": "boolean"
+    }
+  },
   "required": []
 }

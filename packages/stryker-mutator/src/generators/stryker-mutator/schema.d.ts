@@ -1,3 +1,5 @@
 export interface StrykerMutatorGeneratorSchema {
-  name: string;
+  names: string;
+  preset: "react" | "angular" | "node" | "nestjs"
 }
+

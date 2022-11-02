@@ -1,4 +1,5 @@
 export interface MutateExecutorSchema {
-  version: string
-  strykerConfig: string
+  strykerConfig: string;
+  incremental: boolean;
+  mutate: string;
 }

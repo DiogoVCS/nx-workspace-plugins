@@ -5,17 +5,28 @@
   "title": "",
   "type": "object",
   "properties": {
-    "name": {
+    "names": {
       "type": "string",
       "description": "",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "Name of the apps to create a stryker config?"
+      "x-prompt": "Name of the apps to create a stryker config (can be multiple comma separated projects)?"
+    },
+    "preset": {
+      "type": "string",
+      "description": "Type of project(s) to generate the stryker configurations",
+      "enum": [
+        "react",
+        "angular",
+        "node",
+        "nestjs"
+      ],
+      "x-prompt": "Type of project(s) to generate the stryker configurations?"
     }
   },
   "required": [
-    "name"
+    "names"
   ]
 }

@@ -1,7 +1,7 @@
 import {ExecutorContext, logger} from "@nrwl/devkit";
-import {Stryker} from '@stryker-mutator/core';
 import * as path from "path";
 import {MutateExecutorSchema} from "./schema";
+import {execSync} from "child_process";
 
 process.env.NODE_ENV ??= 'test';
 
@@ -10,25 +10,23 @@ export async function strykerExecutor(
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
 
-  logger.warn("Reading stryker configuration.")
+  const strykerConfigPath = path.resolve(context.root, options.strykerConfig);
 
-  const strykerConfig = await import(path.resolve(context.root, options.strykerConfig));
+  //TODO: change this to use @stryker-mutator/core api
+  // const strykerConfig = await import(strykerConfigPath);
 
-  logger.warn(`Reading stryker configuration. ${JSON.stringify(strykerConfig)}`)
+  let strykerCommand = `npx stryker run ${strykerConfigPath}`
 
-  // const strykerConfigFileContent = readFileSync(options.strykerConfig, {encoding: 'utf-8'})
-  // logger.warn(`Reading stryker configuration getting file content. ${strykerConfigFileContent}`)
-  // const strykerConfigAst = tsquery.ast(strykerConfigFileContent);
-  // logger.warn("Reading stryker configuration getting file content. 2")
-  // const strykerConfig = tsquery(strykerConfigAst, 'ObjectLiteralExpression')[0] as unknown as ObjectType;
+  if (options.incremental) {
+    strykerCommand += ` --incremental`
+  }
 
-  // logger.warn(`Stryker RAN - ${strykerConfig['testRunner']}`)
-
-  const stryker = new Stryker({...strykerConfig});
+  if (options.mutate && options.mutate !== '') {
+    strykerCommand += ` --mutate ${options.mutate}`
+  }
 
   try {
-    const mutantResults = await stryker.runMutationTest();
-    logger.log(mutantResults);
+    execSync(strykerCommand, {stdio: [0, 1, 2]})
 
   } catch (error) {
     logger.error("Stryker was unable to run the mutation test. " + error);

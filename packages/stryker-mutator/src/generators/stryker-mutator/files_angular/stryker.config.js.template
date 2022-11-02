@@ -1,0 +1,28 @@
+module.exports = {
+  testRunner: 'jest',
+  packageManager: "<%= packageManager %>",
+  inPlace: false,
+  reporters: ['html', 'clear-text', 'progress'],
+  coverageAnalysis: 'perTest',
+  tsconfigFile: './<%= projectRoot %>/tsconfig.spec.json',
+  mutate: ['./<%= sourceRoot %>/**/*.ts',
+    '!./<%= sourceRoot %>/**/*.spec.ts',
+    "!./<%= sourceRoot %>/environments/**/*",
+    "!./<%= sourceRoot %>/main.ts",
+    "!./<%= sourceRoot %>/polyfills.ts",
+    "!./<%= sourceRoot %>/app/infrastructure/**/*",
+    "!./<%= sourceRoot %>/app/models/**/*"
+  ],
+  ignorePatterns: ['dist', 'coverage', 'node_modules'],
+  plugins: ['@stryker-mutator/jest-runner'],
+  disableTypeChecks: './**/*.{js,ts,jsx,tsx,html,vue}',
+  jest: {
+    projectType: 'custom',
+    configFile: './<%= projectRoot %>/jest.config.js',
+    config: {
+      testEnvironment: "jsdom"
+    },
+    enableFindRelatedTests: true,
+  },
+  commandRunner: {command: "nx test <%= name %>"}
+};
