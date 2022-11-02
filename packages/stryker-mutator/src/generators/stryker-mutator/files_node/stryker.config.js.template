@@ -1,20 +1,24 @@
 module.exports = {
   testRunner: 'jest',
-  // testRunnerNodeArgs: ['--experimental-vm-modules'],
-  inPlace: true,
+  packageManager: '<%= packageManager %>',
+  inPlace: false,
   reporters: ['html', 'clear-text', 'progress'],
-  coverageAnalysis: 'off',
-  // coverageAnalysis: 'perTest',
-  tsconfigFile: './tsconfig.json',
-  mutate: ['./**/*.ts',
-    '!./**/*.spec.ts',
+  coverageAnalysis: 'perTest',
+  tsconfigFile: './<%= projectRoot %>/tsconfig.spec.json',
+  mutate: ['./<%= sourceRoot %>/**/*.ts',
+    '!./<%= sourceRoot %>/**/*.spec.ts',
+    ''!./<%= sourceRoot %>/main.ts',
   ],
   ignorePatterns: ['dist', 'coverage', 'node_modules'],
   plugins: ['@stryker-mutator/jest-runner'],
   disableTypeChecks: './**/*.{js,ts,jsx,tsx,html,vue}',
   jest: {
     projectType: 'custom',
-    configFile: './jest.config.js',
-    enableFindRelatedTests: true
+    configFile: './<%= projectRoot %>/jest.config.js',
+    enableFindRelatedTests: true,
   },
-}
+  commandRunner: {command: 'nx test <%= name %>'},
+  buildCommand: 'nx build <%= name %>',
+  ignoreStatic: true,
+  fileLogLevel: 'error'
+};
