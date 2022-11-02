@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.1.0...stryker-mutator-0.2.0) (2022-11-02)
+
+
+### Bug Fixes
+
+* Added html reports configuration and fixed build commands for multiple project generators. ([e043952](https://github.com/DiogoVCS/nx-graphql-mesh/commit/e0439529e87a4d21a7e0acd961521b182f91f06b))
+
+
+### Features
+
+* Removed react preset as it is not supported yet ([b957c94](https://github.com/DiogoVCS/nx-graphql-mesh/commit/b957c94184c9339fc588d4f0fa67ccced0eaeec7))
+
+
+
 # [0.1.0](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.0.15...stryker-mutator-0.1.0) (2022-11-02)
 
 
