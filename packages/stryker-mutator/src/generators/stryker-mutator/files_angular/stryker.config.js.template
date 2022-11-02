@@ -22,6 +22,9 @@ module.exports = {
     },
     enableFindRelatedTests: true,
   },
-  commandRunner: {command: 'nx test <%= name %>'},
+  commandRunner: {command: 'nx test <%= projectName %>'},
   ignoreStatic: true,
+  htmlReporter: {
+    baseDir: 'dist/reports/mutation/html/<%= projectRoot %>'
+  }
 };

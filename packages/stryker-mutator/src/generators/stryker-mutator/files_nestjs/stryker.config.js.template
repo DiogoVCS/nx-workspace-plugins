@@ -7,8 +7,8 @@ module.exports = {
   tsconfigFile: './<%= projectRoot %>/tsconfig.spec.json',
   mutate: ['./<%= sourceRoot %>/**/*.ts',
     '!./<%= sourceRoot %>/**/*.spec.ts',
-    ''!./<%= sourceRoot %>/environments/**/*',
-    ''!./<%= sourceRoot %>/main.ts',
+    '!./<%= sourceRoot %>/environments/**/*',
+    '!./<%= sourceRoot %>/main.ts',
   ],
   ignorePatterns: ['dist', 'coverage', 'node_modules'],
   plugins: ['@stryker-mutator/jest-runner'],
@@ -18,8 +18,10 @@ module.exports = {
     configFile: './<%= projectRoot %>/jest.config.js',
     enableFindRelatedTests: true,
   },
-  commandRunner: {command: 'nx test <%= name %>'},
-  buildCommand: 'nx build <%= name %>',
+  commandRunner: {command: 'nx test <%= projectName %>'},
+  buildCommand: 'nx build <%= projectName %>',
   ignoreStatic: true,
-  fileLogLevel: 'error'
+  htmlReporter: {
+    baseDir: 'dist/reports/mutation/html/<%= projectRoot %>'
+  }
 };

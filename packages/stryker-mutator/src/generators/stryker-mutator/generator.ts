@@ -56,9 +56,11 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   let filesPath = './files_node';
 
   if (options.preset === 'angular') {
-    filesPath = './files_angular'
+    filesPath = './files_angular';
   } else if (options.preset === 'react') {
-    filesPath = './files_react'
+    filesPath = './files_react';
+  } else if (options.preset === 'nestjs') {
+    filesPath = './files_nestjs';
   }
 
   const templateOptions = {
