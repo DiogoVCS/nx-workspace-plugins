@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/DiogoVCS/nx-workspace-plugins/compare/stryker-mutator-0.2.0...stryker-mutator-0.2.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* Added documentation for the stryler mutator project ([8c15e40](https://github.com/DiogoVCS/nx-workspace-plugins/commit/8c15e40c51e8d4eaf19184169cb4a54ca908d677))
+* Changed html reporter configuration for stryker in order to replace deprecated argument ([abd91f2](https://github.com/DiogoVCS/nx-workspace-plugins/commit/abd91f2fad94125b1bb150d32d0afb37ca637579))
+
+
+
 # [0.2.0](https://github.com/DiogoVCS/nx-graphql-mesh/compare/stryker-mutator-0.1.0...stryker-mutator-0.2.0) (2022-11-02)
 
 
