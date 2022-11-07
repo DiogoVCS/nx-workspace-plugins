@@ -22,6 +22,6 @@ module.exports = {
   buildCommand: 'nx build <%= projectName %>',
   ignoreStatic: true,
   htmlReporter: {
-    baseDir: 'dist/reports/mutation/html/<%= projectRoot %>'
+    fileName: 'dist/reports/mutation/html/<%= projectRoot %>/stryker.html',
   }
 };
