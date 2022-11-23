@@ -2,6 +2,8 @@ import {ExecutorContext} from "@nrwl/devkit";
 import * as path from "path";
 import {MutateExecutorSchema} from "./schema";
 import {execSync} from "child_process";
+import {Stryker} from "@stryker-mutator/core";
+import {transpile} from "typescript"
 
 process.env.NODE_ENV ??= 'test';
 
@@ -11,11 +13,19 @@ export async function strykerExecutor(
 ): Promise<{ success: boolean }> {
 
   const strykerConfigPath = path.resolve(context.root, options.strykerConfig);
+  const tsConfigPath = path.resolve(context.root, options["tsConfig"]);
 
   //TODO: change this to use @stryker-mutator/core api
-  // const strykerConfig = await import(strykerConfigPath);
+  const strykerConfig = await import(strykerConfigPath);
 
   let strykerCommand = `npx stryker run ${strykerConfigPath}`
+
+
+  if (strykerConfig?.["jest"]?.["configFile"]?.endsWith(".ts")) {
+    transpile(strykerConfig["jest"]["configFile"], {outFile: `dist/${strykerConfigPath}`, project: tsConfigPath})
+
+    strykerCommand = `npx stryker run dist/${strykerConfigPath}`
+  }
 
   if (options.incremental) {
     strykerCommand += ` --incremental`

@@ -17,6 +17,7 @@ module.exports = {
   jest: {
     projectType: 'custom',
     configFile: './<%= projectRoot %>/jest.config.js',
+    tsConfig: './<%= projectRoot %>/tsconfig.spec.json'
     config: {
       testEnvironment: 'jsdom'
     },
