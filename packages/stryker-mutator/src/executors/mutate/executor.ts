@@ -3,8 +3,7 @@ import * as path from "path";
 import {MutateExecutorSchema} from "./schema";
 import {execSync} from "child_process";
 import {ModuleKind, transpileModule, TranspileOptions} from "typescript"
-import {readFileSync, writeFileSync, rmSync, existsSync} from "fs";
-import {fileExists} from "@nrwl/nx-plugin/testing";
+import {existsSync, readFileSync, rmSync, writeFileSync} from "fs";
 
 process.env.NODE_ENV ??= 'test';
 
@@ -19,26 +18,29 @@ export async function strykerExecutor(
   const strykerConfig = await import(strykerConfigPath);
 
   let strykerCommand = `npx stryker run ${strykerConfigPath}`
-
-  existsSync(strykerConfig?.["jest"]?.["configFile"]?.endsWith(".ts"))
-
   let needsTranspiling = false;
-  const jestConfigJsPath = `${context.root}/${options.strykerConfig.replace("/stryker.config.js", "")}/jest.config.js`;
+  let jestConfigJsPath;
 
-  if (existsSync(strykerConfig?.["jest"]?.["configFile"]?.endsWith(".ts"))) {
-    needsTranspiling = true
+  if (strykerConfig?.["jest"]?.["configFile"]) {
 
-    const jestConfig = readFileSync(strykerConfig?.["jest"]?.["configFile"].replace(".js", ".ts")).toString();
-
-    let result = tsCompile(jestConfig);
-    result = result.replace("exports.default", "module.exports")
-    result = result.replace("Object.defineProperty(exports, \"__esModule\", { value: true });", "")
-    result = result.replace("\"use strict\";", "")
+    const originalJestConfigPath = path.resolve(context.root, strykerConfig?.["jest"]?.["configFile"]);
 
 
-    writeFileSync(jestConfigJsPath, result)
+    jestConfigJsPath = `${originalJestConfigPath.replace("/jest.config.ts", "/jest.config.js")}`;
+    const jestConfigTsPath = `${originalJestConfigPath.replace("/jest.config.js", "/jest.config.ts")}`;
 
-    strykerCommand = `npx stryker run ${jestConfigJsPath}`
+    if (existsSync(jestConfigTsPath)) {
+      needsTranspiling = true
+
+      const jestConfig = readFileSync(jestConfigTsPath).toString();
+
+      let result = tsCompile(jestConfig);
+      result = result.replace("exports.default", "module.exports")
+      result = result.replace("Object.defineProperty(exports, \"__esModule\", { value: true });", "")
+      result = result.replace("\"use strict\";", "")
+
+      writeFileSync(jestConfigJsPath, result)
+    }
   }
 
   if (options.incremental) {
@@ -52,12 +54,12 @@ export async function strykerExecutor(
   try {
     execSync(strykerCommand, {stdio: [0, 1, 2]})
 
-    if(needsTranspiling){
+    if (needsTranspiling && jestConfigJsPath) {
       rmSync(jestConfigJsPath)
     }
 
   } catch (error) {
-    if(existsSync(jestConfigJsPath)){
+    if (needsTranspiling && jestConfigJsPath && existsSync(jestConfigJsPath)) {
       rmSync(jestConfigJsPath)
     }
     return {
@@ -65,7 +67,7 @@ export async function strykerExecutor(
     }
   }
 
-  if(existsSync(jestConfigJsPath)){
+  if (needsTranspiling && jestConfigJsPath && existsSync(jestConfigJsPath)) {
     rmSync(jestConfigJsPath)
   }
 
