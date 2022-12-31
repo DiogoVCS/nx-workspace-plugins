@@ -8,6 +8,7 @@ import {
   names,
   offsetFromRoot,
   Tree,
+  updateJson
 } from '@nrwl/devkit';
 import * as path from 'path';
 import {GraphqlMeshGeneratorSchema} from './schema';
@@ -179,6 +180,16 @@ export async function applicationGenerator(
   if (!options.singleMeshFile) {
     addFiles(tree, normalizedOptions, './files-multiple-mesh');
   }
+
+  updateJson(tree, "package.json", (value) => {
+    if (value?.scripts) {
+      value.scripts = {
+        ...value.scripts,
+        "ts-node-dev": "ts-node-dev",
+      }
+    }
+    return value;
+  })
 
   await formatFiles(tree);
 

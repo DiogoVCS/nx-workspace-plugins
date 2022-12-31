@@ -2,12 +2,19 @@ name: Publish to NPM
 on:
   workflow_dispatch:
     inputs:
-      choice:
+      package:
         type: choice
         description: Choose package to publish
         options:
           - graphql-mesh
           - stryker-mutator
+      bump:
+        type: choice
+        description: Choose a bump type
+        options:
+          - patch
+          - minor
+          - major
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,12 +43,12 @@ jobs:
 
       - name: Version
         shell: bash
-        run: npx nx run ${{ github.event.inputs.choice }}:version --releaseAs=major
+        run: npx nx run ${{ github.event.inputs.package }}:version --releaseAs=${{ github.event.inputs.bump }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build 🔧
-        run: npx nx run ${{ github.event.inputs.choice }}:build
+        run: npx nx run ${{ github.event.inputs.package }}:build
 
       - name: Find Tag
         id: tagger
@@ -58,6 +65,6 @@ jobs:
           TAG_NAME: ${{steps.tagger.outputs.tag}}
 
       - name: Publish package on NPM 📦
-        run: npm publish ./dist/packages/${{ github.event.inputs.choice }} --access public
+        run: npm publish ./dist/packages/${{ github.event.inputs.package }} --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
