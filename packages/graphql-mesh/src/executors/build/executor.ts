@@ -1,14 +1,17 @@
 import {BuildExecutorSchema} from './schema';
-import {promisify} from "util";
-import {exec, execSync} from "child_process";
+import {execSync} from "child_process";
 import {copyFileSync, existsSync, mkdirSync, readdirSync, statSync} from "fs"
 import {detectPackageManager, getPackageManagerCommand, logger} from "@nrwl/devkit";
 import {replaceTscAliasPaths,} from 'tsc-alias';
 import * as path from "path";
 import {PackageManagerCommands} from "nx/src/utils/package-manager";
+import * as dotenv from "dotenv";
+import {DEFAULT_CLI_PARAMS, graphqlMesh} from "@graphql-mesh/cli";
+
+const tsc = require('node-typescript-compiler')
+
 
 export default async function runExecutor(options: BuildExecutorSchema) {
-  const buildCommand = createBuildCommand(options)
   const packageManager = getPackageManagerCommand();
 
   if (!options.singleMeshFile) {
@@ -16,7 +19,7 @@ export default async function runExecutor(options: BuildExecutorSchema) {
   }
 
   if (options.typescriptSupport) {
-    await transpileTypescriptFiles(options, packageManager);
+    await transpileTypescriptFiles(options);
     copyNonJavascriptFilesRecursiveSync(options.rootPath, options.outputPath, options.rootPath)
   }
 
@@ -24,15 +27,37 @@ export default async function runExecutor(options: BuildExecutorSchema) {
     copyFileSync(`${options.meshYmlPath}/.meshrc.yml`, `dist/${options.meshYmlPath}/.meshrc.yml`);
   }
 
-  return runBuildCommand(buildCommand, options);
+  return runBuildCommand(options);
 }
 
-async function runBuildCommand(buildCommand: string, options: BuildExecutorSchema) {
-  const result = await promisify(exec)(buildCommand);
+async function runBuildCommand(options: BuildExecutorSchema) {
+  try {
+    if (options.envFile) {
+      const envConfig = dotenv.config({path: path.resolve(__dirname, options.envFile)})
 
-  if (!result.stdout.includes("Done!")) {
+      if (envConfig.error) {
+        logger.warn(`Error reading .env file: ${envConfig.error}`);
+      } else if (envConfig.parsed) {
+        for (const key of Object.keys(envConfig.parsed)) {
+          process.env[key] = envConfig.parsed[key]
+        }
+      }
+    }
+
+    const buildArgs = ["build"];
+    if (options.typescriptSupport) {
+      buildArgs.push("--dir", `dist/${options.meshYmlPath}`);
+    } else {
+      buildArgs.push("--dir", `${options.meshYmlPath}`);
+    }
+
+    if (options.fileType) {
+      buildArgs.push("--fileType", `${options.fileType}`);
+    }
+
+    await graphqlMesh({...DEFAULT_CLI_PARAMS}, buildArgs)
+  } catch (e) {
     return {
-      ...result,
       success: false
     }
   }
@@ -41,7 +66,6 @@ async function runBuildCommand(buildCommand: string, options: BuildExecutorSchem
   copyFilesRecursiveSync(`dist/${options.meshYmlPath}`, `${options.rootPath}/.compiled`)
 
   return {
-    ...result,
     success: true,
   };
 }
@@ -53,25 +77,6 @@ function removeLastOnPath(fullPath: string) {
     fullPath = splitted.join("/")
   }
   return fullPath;
-}
-
-function createBuildCommand(options: BuildExecutorSchema) {
-  let buildCommand = `mesh build`;
-
-  if (options.typescriptSupport) {
-    buildCommand += ` --dir dist/${options.meshYmlPath}`;
-  } else {
-    buildCommand += ` --dir ${options.meshYmlPath}`;
-  }
-
-  if (options.fileType) {
-    buildCommand += ` --fileType ${options.fileType}`
-  }
-
-  if (options.envFile) {
-    buildCommand = `env-cmd ${options.envFile} ${buildCommand}`
-  }
-  return buildCommand;
 }
 
 function constructMeshRcYamlFile(meshYmlPath: string, packageManagerCommands: PackageManagerCommands) {
@@ -94,24 +99,12 @@ function constructMeshRcYamlFile(meshYmlPath: string, packageManagerCommands: Pa
     return {
       success: false
     }
-    
   }
 }
 
-async function transpileTypescriptFiles(options: BuildExecutorSchema, packageManagerCommands: PackageManagerCommands) {
-  const tsconfigPath = `${options.tsconfigPath}`;
-  const packageManager = detectPackageManager();
-  const baseCommand = `tsc --project ./${tsconfigPath}`
-  let command = ""
-
-  //TODO: change this for the typescript compiler API.
-  if (packageManager === "npm") {
-    command = `${packageManagerCommands.exec} --package=typescript -c '${baseCommand}'`
-  } else {
-    command = `${packageManager} dlx ${baseCommand}`
-  }
-  execSync(command, {stdio: [0, 1, 2]})
-  await replaceTscAliasPaths({configFile: tsconfigPath})
+async function transpileTypescriptFiles(options: BuildExecutorSchema) {
+  await tsc.compile({'project': `./${options.tsconfigPath}`})
+  await replaceTscAliasPaths({configFile: options.tsconfigPath})
 }
 
 function copyFilesRecursiveSync(src: string, dest: string) {

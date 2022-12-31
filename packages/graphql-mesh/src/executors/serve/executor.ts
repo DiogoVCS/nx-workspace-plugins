@@ -1,17 +1,27 @@
 import {ServeExecutorSchema} from './schema';
-import {promisify} from "util";
-import {exec} from "child_process";
+import {execSync} from "child_process";
+import * as dotenv from 'dotenv';
+import {getPackageManagerCommand, logger} from "@nrwl/devkit";
 
 export default async function runExecutor(options: ServeExecutorSchema) {
-
-  let serveCommand = `mesh dev --dir ${options.meshYmlPath}`;
-  if (options.port) {
-    serveCommand += ` --port ${options.port}`
-  }
+  const packageManager = getPackageManagerCommand();
 
   if (options.envFile) {
-    serveCommand = `env-cmd ${options.envFile} ${serveCommand}`
+    const envConfig = dotenv.config({path: `./${options.envFile}`})
+
+    if (envConfig.error) {
+      logger.warn(`Error reading .env file: ${envConfig.error}`);
+    } else if (envConfig.parsed) {
+      for (const key of Object.keys(envConfig.parsed)) {
+        process.env[key] = envConfig.parsed[key]
+      }
+    }
   }
 
-  await promisify(exec)(serveCommand);
+  //FIXME:
+  // if (options.port) {
+  //   serveCommand += ` --port ${options.port}`
+  // }
+
+  execSync(packageManager.run("ts-node-dev", `--project ${options.tsConfigPath} --log-error --watch ${options.rootPath} ${options.mainPath}`), {stdio: [0, 1, 2]});
 }

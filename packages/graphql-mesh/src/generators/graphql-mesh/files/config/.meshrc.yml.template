@@ -3,7 +3,7 @@ sources:
   - name: FakeAPI
     handler:
       jsonSchema:
-        baseUrl: https://not-existing-api.com/API
+        endpoint: https://not-existing-api.com/API
         operations:
           - type: Query
             field: me
@@ -16,7 +16,9 @@ sources:
             method: GET
             responseSchema: ../src/json-schemas/company.json#/definitions/Company
             argTypeMap:
-              id: ID!
+              id:
+                type: string
+                nullable: false
           - type: Mutation
             field: createUser
             path: /user
@@ -28,7 +30,9 @@ sources:
             field: updateUser
             path: /user/{args.id}
             argTypeMap:
-              id: ID!
+              id:
+                type: string
+                nullable: false
             method: POST
             requestSample: ../src/json-samples/user-input.json
             requestTypeName: CreateUpdateUser
@@ -37,7 +41,9 @@ sources:
             field: deleteUser
             path: /user/{args.id}
             argTypeMap:
-              id: ID!
+              id:
+                type: string
+                nullable: false
             method: DELETE
 <%  } %>
 <% if (singleMeshFile === false) {%>
@@ -58,16 +64,18 @@ transforms:
   - namingConvention:
       typeNames: pascalCase
       fieldNames: camelCase
-  - mock:
-      mocks:
-        - apply: User.firstName
-          faker: '{{name.firstName}}'
-        - apply: User.lastName
-          faker: '{{name.lastName}}'
-        - apply: User.jobTitle
-          faker: '{{name.jobTitle}}'
-        - apply: Company.name
-          faker: '{{company.companyName}}'
+
+#plugins:
+#  - mock:
+#      mocks:
+#        - apply: User.firstName
+#          faker: '{{name.firstName}}'
+#        - apply: User.lastName
+#          faker: '{{name.lastName}}'
+#        - apply: User.jobTitle
+#          faker: '{{name.jobTitle}}'
+#        - apply: Company.name
+#          faker: '{{company.companyName}}'
 
 documents:
   - ../src/example-query.graphql

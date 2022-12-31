@@ -1,0 +1,21 @@
+/* eslint-disable */
+export default {
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+      stringifyContentPathRegex: '\\.(html|svg)$',
+    },
+  },
+  displayName: '<%= projectName %>',
+  preset: '<%= offsetFromRoot %>jest.preset.js',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.[tj]sx?$': 'ts-jest',
+  },
+  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  moduleFileExtensions: ['ts', 'js'],
+  coverageDirectory: '<%= offsetFromRoot %>coverage/<%= projectRoot %>',
+  collectCoverage: true,
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'],
+  resolver: '@nrwl/jest/plugins/resolver',
+};

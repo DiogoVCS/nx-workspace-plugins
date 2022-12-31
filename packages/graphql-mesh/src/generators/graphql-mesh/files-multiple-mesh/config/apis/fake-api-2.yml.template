@@ -1,6 +1,6 @@
   handler:
     jsonSchema:
-      baseUrl: https://not-existing-api.com/API
+      endpoint: https://not-existing-api.com/API
       operations:
         - type: Query
           field: me
@@ -13,7 +13,9 @@
           method: GET
           responseSchema: ../src/json-schemas/company.json#/definitions/Company
           argTypeMap:
-            id: ID!
+            id:
+              type: string
+              nullable: false
         - type: Mutation
           field: createUser
           path: /user
@@ -25,7 +27,9 @@
           field: updateUser
           path: /user/{args.id}
           argTypeMap:
-            id: ID!
+            id:
+              type: string
+              nullable: false
           method: POST
           requestSample: ../src/json-samples/user-input.json
           requestTypeName: CreateUpdateUser
@@ -34,5 +38,7 @@
           field: deleteUser
           path: /user/{args.id}
           argTypeMap:
-            id: ID!
+            id:
+              type: string
+              nullable: false
           method: DELETE

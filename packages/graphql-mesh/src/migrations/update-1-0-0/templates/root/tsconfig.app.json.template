@@ -3,8 +3,8 @@
   "compilerOptions": {
     "outDir": "<%= offsetFromRoot %>dist",
     "declaration": true,
-    "types": []
+    "types": ["node"]
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.yaml",  "**/*.yml", "**/*.json", ".meshrc.yml"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

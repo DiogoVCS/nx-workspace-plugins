@@ -1,0 +1,25 @@
+import './aliases' // Needs to be at the top of the file.
+import {getMesh} from '@graphql-mesh/runtime';
+import {DEFAULT_CLI_PARAMS, findAndParseConfig, serveMesh} from '@graphql-mesh/cli';
+
+async function main() {
+  const meshConfig = await findAndParseConfig({
+    dir: "<%= projectRoot %>/src"
+  });
+  const meshInstance$ = getMesh(meshConfig);
+
+  const serveMeshOptions = {
+    baseDir: "./config",
+    argsPort: 4000,
+    getBuiltMesh: () => meshInstance$,
+    logger: meshConfig.logger.child('Server'),
+    rawServeConfig: meshConfig.config.serve,
+    playgroundTitle: `<%= projectName %> GraphiQL`,
+  };
+
+  return serveMesh(serveMeshOptions, {
+    ...DEFAULT_CLI_PARAMS
+  });
+}
+
+main().catch(err => console.error(err));

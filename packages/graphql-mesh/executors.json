@@ -12,9 +12,9 @@
       "description": "serve executor"
     },
     "start": {
-      "implementation": "./src/executors/serve/executor",
-      "schema": "./src/executors/serve/schema.json",
-      "description": "serve executor"
+      "implementation": "./src/executors/start/executor",
+      "schema": "./src/executors/start/schema.json",
+      "description": "start executor"
     }
   }
 }

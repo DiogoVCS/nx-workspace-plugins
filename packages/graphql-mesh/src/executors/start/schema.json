@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "outputCapture": "direct-nodejs",
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Serve executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "meshYmlPath": {
+      "description": "Path to where the .meshrc.yml file is located",
+      "type": "string"
+    },
+    "typescriptSupport": {
+      "description": "Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time.",
+      "type": "boolean",
+      "default": true
+    },
+    "envFile": {
+      "description": "Path to where the .env file is located",
+      "type": "string"
+    }
+  },
+  "required": ["meshYmlPath"]
+}

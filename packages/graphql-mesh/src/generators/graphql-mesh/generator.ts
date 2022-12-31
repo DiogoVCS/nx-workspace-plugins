@@ -70,17 +70,18 @@ function addFiles(tree: Tree, options: NormalizedSchema, dir: string) {
 
 function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
   const dependencies: Record<string, string> = {
-    "@graphql-mesh/cli": "0.67.3",
-    "@graphql-mesh/json-schema": "0.27.6",
-    "@graphql-mesh/transform-mock": "0.13.6",
-    "@graphql-mesh/transform-naming-convention": "^0.10.32",
-    "graphql": "16.0.1",
+    "@graphql-mesh/cli": "0.82.7",
+    "@graphql-mesh/json-schema": "0.37.5",
+    "@graphql-mesh/transform-mock": "0.15.6",
+    "@graphql-mesh/transform-naming-convention": "0.13.5",
+    "graphql": "16.6.1",
   }
 
   let devDependencies: Record<string, string> = {
     "@graphql-mesh/cross-helpers": "0.1.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-typescript": "^7.13.0",
+    "@graphql-mesh/plugin-mock": "^0.1.4",
+    "ts-node-dev": "^2.0.0",
+    "module-alias": "^2.2.2",
   }
 
   if (!options.singleMeshFile) {
@@ -118,7 +119,7 @@ export async function applicationGenerator(
           singleMeshFile: options.singleMeshFile,
           outputPath: `dist/${normalizedOptions.projectRoot}`,
           rootPath: `${normalizedOptions.projectRoot}`,
-          tsconfigPath: `${normalizedOptions.projectRoot}/tsconfig.lib.json`,
+          tsconfigPath: `${normalizedOptions.projectRoot}/tsconfig.app.json`,
           typescriptSupport: true
         }
       },
@@ -129,14 +130,36 @@ export async function applicationGenerator(
         ],
         outputs: [`coverage/${normalizedOptions.projectRoot}`],
         options: {
-          jestConfig: `${normalizedOptions.projectRoot}/jest.config.js`,
+          jestConfig: `${normalizedOptions.projectRoot}/jest.config.ts`,
           passWithNoTests: true
         }
       },
       serve: {
         executor: '@diogovcs/graphql-mesh:serve',
+        dependsOn: [
+          {
+            target: "build",
+            projects: "self"
+          }
+        ],
         options: {
-          meshYmlPath: `${normalizedOptions.projectRoot}/config`
+          meshYmlPath: `${normalizedOptions.projectRoot}/config`,
+          tsConfigPath: `${normalizedOptions.projectRoot}/tsconfig.app.json`,
+          rootPath: `${normalizedOptions.projectRoot}`,
+          mainPath: `${normalizedOptions.projectRoot}/src/main.ts`,
+        }
+      },
+      start: {
+        executor: "@diogovcs/graphql-mesh:start",
+        dependsOn: [
+          {
+            target: "build",
+            projects: "self"
+          }
+        ],
+        options: {
+          meshYmlPath: `${normalizedOptions.projectRoot}/config`,
+          typescriptSupport: true
         }
       },
       lint: {

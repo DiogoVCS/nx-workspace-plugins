@@ -1,0 +1,14 @@
+import moduleAlias from 'module-alias'
+import path from 'path';
+import tsConfig from '../<%= offsetFromRoot %>tsconfig.base.json'
+
+// TsConfig aliases have to be manually created to be recognized by the ts-node-dev server.
+const aliases = {};
+
+for (const key of Object.keys(tsConfig.compilerOptions.paths)) {
+  if (tsConfig.compilerOptions?.paths[key]?.[0]) {
+    aliases[key] = path.resolve(__dirname, "<%= offsetFromRoot %>", tsConfig.compilerOptions.paths[key][0]);
+  }
+}
+
+moduleAlias.addAliases(aliases)
