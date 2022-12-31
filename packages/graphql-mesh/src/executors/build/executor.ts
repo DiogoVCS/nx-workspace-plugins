@@ -8,6 +8,7 @@ import {PackageManagerCommands} from "nx/src/utils/package-manager";
 import * as dotenv from "dotenv";
 import {DEFAULT_CLI_PARAMS, graphqlMesh} from "@graphql-mesh/cli";
 
+// eslint-disable-next-line
 const tsc = require('node-typescript-compiler')
 
 

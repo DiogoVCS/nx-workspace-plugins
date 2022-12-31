@@ -83,14 +83,15 @@ Here it is an example a build executor configuration:
 | outputPath        | `string`  |         | Path to where the built files will be placed.                                                                                                        |
 | rootPath          | `string`  |         | Root path of the application.                                                                                                                        |
 | tsconfigPath      | `string`  |         | Path to where the tsconfig file is located.                                                                                                          |
-| typescriptSupport | `boolean` | `true   | Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time. |
+| typescriptSupport | `boolean` | `true`  | Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time. |
 
 When using the `singleMeshFile` configuration with `false`, the compiled `.meshrc.yml` will be created under
 the `.compiled` folder.
 
 ## Serve
 
-Here it is an example a build executor configuration:
+The serve is intended to be used only in development as it creates a development server to listen for code changes. For
+Production use the start executor. Here it is an example a serve executor configuration:
 
 ```json
 {
@@ -105,8 +106,33 @@ Here it is an example a build executor configuration:
 
 ### Options
 
-| name        | type      | default                   | description                                                                                                    |
-|-------------|-----------|---------------------------|----------------------------------------------------------------------------------------------------------------|
-| meshYmlPath | `string`  | `false`                   | Path to the `.meshrc.yml` file.                                                                                |
-| envFile     | `string`  | -                         | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files. |
-| port        | `integer` | Graphql Mesh default port | Port where the application will be served.                                                                     |
+| name         | type     | default                   | description                                                                                                    |
+|--------------|----------|---------------------------|----------------------------------------------------------------------------------------------------------------|
+| meshYmlPath  | `string` | `false`                   | Path to the `.meshrc.yml` file.                                                                                |
+| envFile      | `string` | -                         | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files. |
+| tsConfigPath | `string` | Graphql Mesh default port | Path to the `tsconfig.json` file.                                                                              |
+| mainPath     | `string` | Graphql Mesh default port | Path to the `main.ts` file.                                                                                    |
+| rootPath     | `string` | Graphql Mesh default port | Root folder of the project.                                                                                    |
+
+## Start
+
+Triggers the mesh start command. Should be used for production:
+
+```json
+{
+  "serve": {
+    "executor": "@diogovcs/graphql-mesh:start",
+    "options": {
+      "meshYmlPath": "apps/api-gateway/config"
+    }
+  }
+}
+```
+
+### Options
+
+| name              | type      | default | description                                                                                                                                          |
+|-------------------|-----------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| meshYmlPath       | `string`  | `false` | Path to the `.meshrc.yml` file.                                                                                                                      |
+| envFile           | `string`  | -       | Path to the `.env` file where the environment variables are located. Defaults to do not use environment files.                                       |
+| typescriptSupport | `boolean` | `true`  | Either if typescript should be provided to transpile files. IF only using Javascript files, turn this to false, because it will decrease build time. |

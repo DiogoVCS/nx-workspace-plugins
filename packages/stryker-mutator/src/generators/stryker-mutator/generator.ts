@@ -79,7 +79,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 function addMissingDependencies(tree: Tree, options: NormalizedSchema) {
   const dependencies: Record<string, string> = {}
 
-  let devDependencies: Record<string, string> = {
+  const devDependencies: Record<string, string> = {
     "@stryker-mutator/core": "^6.3.0",
     "@stryker-mutator/html-reporter": "^3.1.0",
     "@stryker-mutator/jest-runner": "^6.3.0",

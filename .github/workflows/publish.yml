@@ -36,7 +36,7 @@ jobs:
 
       - name: Version
         shell: bash
-        run: npx nx run ${{ github.event.inputs.choice }}:version --releaseAs=prerelease --preid=beta
+        run: npx nx run ${{ github.event.inputs.choice }}:version --releaseAs=major
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
