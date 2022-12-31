@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.1](https://github.com/DiogoVCS/nx-workspace-plugins/compare/graphql-mesh-1.0.0...graphql-mesh-1.0.1) (2022-12-31)
+
+
+
 # [1.0.0](https://github.com/DiogoVCS/nx-workspace-plugins/compare/graphql-mesh-0.2.1...graphql-mesh-1.0.0) (2022-12-31)
 
 
