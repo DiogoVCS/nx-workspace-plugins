@@ -9,5 +9,6 @@
   },
   "nx-migrations": {
     "migrations": "./migrations.json"
-  }
+  },
+  "license": "MIT"
 }
