@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.5](https://github.com/DiogoVCS/nx-workspace-plugins/compare/stryker-mutator-0.2.4...stryker-mutator-0.2.5) (2023-01-22)
+
+
+
 ## [0.2.4](https://github.com/DiogoVCS/nx-workspace-plugins/compare/stryker-mutator-0.2.3...stryker-mutator-0.2.4) (2022-11-28)
 
 
