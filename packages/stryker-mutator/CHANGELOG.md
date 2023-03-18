@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.6](https://github.com/DiogoVCS/nx-workspace-plugins/compare/stryker-mutator-0.2.5...stryker-mutator-0.2.6) (2023-03-18)
+
+
+### Bug Fixes
+
+* Fixed stryker mutation generator missing comma ([cb2b597](https://github.com/DiogoVCS/nx-workspace-plugins/commit/cb2b5970b6565849dc0de690649c3d5ab76ae493))
+
+
+
 ## [0.2.5](https://github.com/DiogoVCS/nx-workspace-plugins/compare/stryker-mutator-0.2.4...stryker-mutator-0.2.5) (2023-01-22)
 
 
