@@ -22,12 +22,13 @@ export async function strykerExecutor(
   let jestConfigJsPath;
 
   if (strykerConfig?.["jest"]?.["configFile"]) {
+    const configFile = strykerConfig["jest"]["configFile"];
 
-    const originalJestConfigPath = path.resolve(context.root, strykerConfig?.["jest"]?.["configFile"]);
+    const jestConfigFileJs = configFile.replace("/jest.config.ts", "/jest.config.js");
+    const jestConfigFileTs = configFile.replace("/jest.config.js", "/jest.config.ts");
 
-
-    jestConfigJsPath = `${originalJestConfigPath.replace("/jest.config.ts", "/jest.config.js")}`;
-    const jestConfigTsPath = `${originalJestConfigPath.replace("/jest.config.js", "/jest.config.ts")}`;
+    jestConfigJsPath = path.resolve(context.root, jestConfigFileJs);
+    const jestConfigTsPath = path.resolve(context.root, jestConfigFileTs);
 
     if (existsSync(jestConfigTsPath)) {
       needsTranspiling = true
