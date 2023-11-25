@@ -2,6 +2,7 @@
   "name": "@diogovcs/graphql-mesh",
   "version": "1.0.1",
   "main": "src/index.js",
+  "description": "NX plugin for integrating GraphQL Mesh into your NX workspace",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "nx-migrate": {
@@ -10,5 +11,22 @@
   "nx-migrations": {
     "migrations": "./migrations.json"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "Diogo Soares ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiogoVCS/nx-workspace-plugins.git",
+    "directory": "packages/graphql-mesh"
+  },
+  "keywords": [
+    "nx-plugin",
+    "nx-workspace",
+    "nx",
+    "graphql-mesh",
+    "mesh"
+  ],
+  "peerDependencies": {
+    "@nrwl/devkit": "15.0.4"
+  },
+  "homepage": "https://github.com/DiogoVCS/nx-workspace-plugins/tree/main/packages/graphql-mesh"
 }

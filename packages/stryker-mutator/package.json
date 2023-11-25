@@ -1,8 +1,26 @@
 {
   "name": "@diogovcs/stryker-mutator",
   "version": "0.2.6",
+  "description": "NX plugin for integrating Stryker mutation testing into your NX workspace",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
-  "license": "MIT"
+  "license": "MIT",
+  "author": "Diogo Soares ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiogoVCS/nx-workspace-plugins.git",
+    "directory": "packages/stryker-mutator"
+  },
+  "keywords": [
+    "nx-plugin",
+    "nx-workspace",
+    "nx",
+    "graphql-mesh",
+    "stryker"
+  ],
+  "peerDependencies": {
+    "@nrwl/devkit": "15.0.4"
+  },
+  "homepage": "https://github.com/DiogoVCS/nx-workspace-plugins/tree/main/packages/stryker-mutator"
 }
