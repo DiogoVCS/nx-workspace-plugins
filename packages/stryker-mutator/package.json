@@ -1,6 +1,6 @@
 {
   "name": "@diogovcs/stryker-mutator",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "NX plugin for integrating Stryker mutation testing into your NX workspace",
   "main": "src/index.js",
   "generators": "./generators.json",
