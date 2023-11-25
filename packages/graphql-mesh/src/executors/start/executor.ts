@@ -19,7 +19,6 @@ export default async function runExecutor(options: StartExecutorSchema) {
       }
     }
 
-    const buildArgs = ["start"];
     if (options.typescriptSupport) {
       startCommand = `${startCommand} --dir dist/${options.meshYmlPath}`
     } else {

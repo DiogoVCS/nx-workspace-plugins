@@ -5,11 +5,14 @@ import Mock = jest.Mock;
 
 jest.mock("child_process")
 const options: ServeExecutorSchema = {
-  meshYmlPath: "some/path"
+  meshYmlPath: "some/path",
+  tsConfigPath: "some/ts/path",
+  rootPath: "some/root/path",
+  mainPath: "some/main/path"
 };
 
 function mockPromisify(stdout: string) {
-  (child_process.exec as unknown as Mock).mockImplementation((command, callback) => callback(null, {stdout}))
+  (child_process.execSync as unknown as Mock).mockImplementation((command, options) => jest.fn);
 }
 
 describe('Serve Executor', () => {
@@ -24,24 +27,13 @@ describe('Serve Executor', () => {
     mockPromisify("Done!")
     await executor(options);
 
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, `mesh dev --dir ${options.meshYmlPath}`, expect.any(Function))
+    expect((child_process.execSync as unknown as Mock)).toHaveBeenNthCalledWith(2, `npm run ts-node-dev -- --project ${options.tsConfigPath} --log-error --watch ${options.rootPath} ${options.mainPath}`, {stdio: [0, 1, 2]})
   });
 
-  it('should apply the file type', async () => {
-    const port = 4000;
-
+  it('should apply the project and watch for file changes', async () => {
     mockPromisify("Done!")
-    await executor({...options, port});
+    await executor({...options});
 
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(` --port ${port}`), expect.any(Function))
-  });
-
-  it('should apply the env file', async () => {
-    const envFile = "./some-path/.env";
-
-    mockPromisify("Done!")
-    await executor({...options, envFile});
-
-    expect((child_process.exec as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(`env-cmd ${envFile}`), expect.any(Function))
+    expect((child_process.execSync as unknown as Mock)).toHaveBeenNthCalledWith(1, expect.stringContaining(` --project ${options.tsConfigPath} --log-error --watch ${options.rootPath} ${options.mainPath}`), {stdio: [0, 1, 2]})
   });
 });
