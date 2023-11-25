@@ -1,6 +1,6 @@
 {
   "name": "@diogovcs/graphql-mesh",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/index.js",
   "description": "NX plugin for integrating GraphQL Mesh into your NX workspace",
   "generators": "./generators.json",
